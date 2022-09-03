@@ -7,7 +7,7 @@ import InputError from '@/Components/InputError';
 import Label from '@/Components/Label';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
 
-export default function Login({ status, canResetPassword }) {
+export default function Login({ status, canResetPassword, canRegister }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
@@ -77,6 +77,14 @@ export default function Login({ status, canResetPassword }) {
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
+                    {canRegister && (
+                        <Link
+                                href={route('register')}
+                                className="mr-4 text-sm text-gray-700 dark:text-gray-500 underline"
+                            >
+                                Register
+                        </Link>
+                    )}
                     {canResetPassword && (
                         <Link
                             href={route('password.request')}

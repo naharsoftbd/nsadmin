@@ -67,6 +67,7 @@ export default function Sidebar({auth}) {
                                     <span className="text-gray-100">Home</span>
                                 </Link>
                             </li>
+                            { auth.is_admin &&
                             <li className="rounded-sm">
                                 <a
                                     href="#"
@@ -89,6 +90,7 @@ export default function Sidebar({auth}) {
                                     <span className="text-gray-100">Users</span>
                                 </a>
                             </li>
+                            }
                             <li className="rounded-sm">
                                 <a
                                     href="#"
