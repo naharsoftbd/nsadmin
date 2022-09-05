@@ -7,10 +7,11 @@ import InputError from '@/Components/InputError';
 import Label from '@/Components/Label';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
 
-export default function Create(props){
+export default function Edit(props){
+    console.log(props.user);
 	const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
-        email: '',
+        name: props.user.name,
+        email: props.user.email,
         password: '',
         password_confirmation: '',
     });

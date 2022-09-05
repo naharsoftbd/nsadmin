@@ -26,7 +26,7 @@ export default function ListItem({child}) {
       </li>
       <li onClick={() => setShow(true)}>
           <Link
-        href={route('user.create')}
+        href={route('users.create')}
         method='get'
         as='a'
         className="flex items-center p-2 space-x-3 rounded-md"

@@ -3,7 +3,7 @@ import Authenticated from '@/Layouts/Authenticated';
 import DataTable from 'react-data-table-component';
 import styled from 'styled-components';
 import differenceBy from 'lodash/differenceBy';
-import memoize from 'memoize-one';
+import { Inertia } from '@inertiajs/inertia';
 
 export default function Users(props){
 	console.log(props.users);
@@ -40,7 +40,7 @@ export default function Users(props){
         sortable: true,
     },
     {     
-      cell: (row) => <button className="px-2 py-1 bg-green-600 rounded-lg text-white" onClick={()=>{handleButtonClick(row.id);}}>Edit{row.id}</button>,
+      cell: (row) => <button className="px-2 py-1 bg-green-600 rounded-lg text-white" onClick={()=>{handleEditButtonClick(row.edit_url);}}>Edit</button>,
       ignoreRowClick: true,
       allowOverflow: true,
       button: true,
@@ -132,8 +132,9 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
         );
     }, [filteredItems, selectedRows, toggleCleared]);
 
-const handleButtonClick = (id) => {
-   console.log(id,'clicked');
+const handleEditButtonClick = (url) => {
+   console.log(url);
+   Inertia.visit(url, { method: 'get' })
  };
 
 	return (

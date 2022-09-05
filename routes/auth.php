@@ -55,7 +55,7 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
     Route::get('/users',[UserController::class,'index'])->name('users');
-    Route::get('/users/create',[UserController::class,'create'])->name('user.create');
+    Route::get('/users/create',[UserController::class,'create'])->name('users.create');
     Route::post('/users/create',[UserController::class,'store']);
-    Route::get('/users/edit',[UserController::class,'edit'])->name('users.edit');
+    Route::get('/users/{id}/edit',[UserController::class,'edit'])->name('users.edit');
 });

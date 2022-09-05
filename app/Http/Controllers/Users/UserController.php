@@ -111,7 +111,18 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        if(Auth::user()->hasRole('admin')){
+
+            $user = User::find($id);
+            return Inertia::render('Users/Edit', [
+                'user' => $user,
+                'status' => session('status'),
+            ]);
+
+        }else{
+
+            return redirect()->intended('/dashboard');
+        }
     }
 
     /**
