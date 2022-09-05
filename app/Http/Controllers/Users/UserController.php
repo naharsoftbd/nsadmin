@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
+use URL;
 
 class UserController extends Controller
 {
@@ -23,7 +24,18 @@ class UserController extends Controller
     {
         if(Auth::user()->hasRole('admin')){
 
-            $users = User::all();
+            $users = User::all()->map(function ($user) {
+                return [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'created_at' => $user->created_at,
+                    'updated_at' => $user->updated_at,
+                    'email_verified_at' => $user->email_verified_at,
+                    'edit_url' => URL::route('users.edit', $user),
+                ];
+            });
+
             return Inertia::render('Users/Users', [
                 'users' => $users,
                 'status' => session('status'),
@@ -46,7 +58,6 @@ class UserController extends Controller
 
             $users = User::all();
             return Inertia::render('Users/Create', [
-                'users' => $users,
                 'status' => session('status'),
             ]);
 

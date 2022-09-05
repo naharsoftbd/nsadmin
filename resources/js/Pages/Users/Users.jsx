@@ -1,8 +1,9 @@
-import React, { useState }  from "react";
+import React, { useState, useMemo }  from "react";
 import Authenticated from '@/Layouts/Authenticated';
 import DataTable from 'react-data-table-component';
 import styled from 'styled-components';
 import differenceBy from 'lodash/differenceBy';
+import memoize from 'memoize-one';
 
 export default function Users(props){
 	console.log(props.users);
@@ -12,7 +13,7 @@ export default function Users(props){
     const [toggleCleared, setToggleCleared] = React.useState(false);
     const [filteredData, setFilteredData] = React.useState([]);
 
-    const columns = [
+    const columns = useMemo( () => [
     {
         name: 'Name',
         selector: row => row.name,
@@ -38,7 +39,13 @@ export default function Users(props){
         selector: row => row.email_verified_at,
         sortable: true,
     },
-];
+    {     
+      cell: (row) => <button className="px-2 py-1 bg-green-600 rounded-lg text-white" onClick={()=>{handleButtonClick(row.id);}}>Edit{row.id}</button>,
+      ignoreRowClick: true,
+      allowOverflow: true,
+      button: true,
+  }
+]);
 
 const TextField = styled.input`
   height: 32px;
@@ -125,6 +132,9 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
         );
     }, [filteredItems, selectedRows, toggleCleared]);
 
+const handleButtonClick = (id) => {
+   console.log(id,'clicked');
+ };
 
 	return (
 		 <Authenticated
