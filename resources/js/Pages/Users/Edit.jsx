@@ -29,7 +29,7 @@ export default function Edit(props){
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('user.create'));
+        post(route('users.update',[props.user.id]));
     };
 
 	return (
