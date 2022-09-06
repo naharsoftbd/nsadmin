@@ -57,8 +57,14 @@ class UserController extends Controller
     {
         if(Auth::user()->hasRole('admin')){
 
-            $users = User::all();
+            $roles = Role::all()->map(function ($role) {
+                return [
+                    'value' => $role->id,
+                    'label' => $role->name
+                ];
+            });
             return Inertia::render('Users/Create', [
+                'roles' => $roles,
                 'status' => session('status'),
             ]);
 
@@ -119,9 +125,18 @@ class UserController extends Controller
         if(Auth::user()->hasRole('admin')){
 
             $user = User::find($id);
+
+            $roles = Role::all()->map(function ($role) {
+                return [
+                    'value' => $role->id,
+                    'label' => $role->name
+                ];
+            });
+
             return Inertia::render('Users/Edit', [
                 'user' => $user,
                 'role' => $user->roles->first() ? $user->roles->first()->id:0,
+                'roles' => $roles,
                 'status' => session('status'),
             ]);
 

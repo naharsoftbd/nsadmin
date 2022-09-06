@@ -113,7 +113,7 @@ export default function Create(props){
                 </div>
 
                 <div className="mt-4">
-                    <Select id="user_role" name="role" onChange={onSelectHandleChange} className="test" options={options} placeholder="Role" required="required" value={data.role} />
+                    <Select id="user_role" name="role" onChange={onSelectHandleChange} className="test" options={props.roles} placeholder="Role" required="required" value={data.role} />
                 </div>
 
                 <div className="flex items-center justify-end mt-4">

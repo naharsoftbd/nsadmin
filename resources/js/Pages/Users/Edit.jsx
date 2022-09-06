@@ -35,7 +35,7 @@ export default function Edit(props){
         post(route('users.update',[props.user.id]));
     };
 
-    let options = [{value:1,label:"Admin"},{value:2,label:'Subscriber'}];
+    let options = props.roles;
 
     const onSelectHandleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value });

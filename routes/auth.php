@@ -67,4 +67,5 @@ Route::middleware('auth','role:admin')->group(function () {
 
     Route::get('/roles',[RoleController::class,'index'])->name('roles.index');
     Route::get('/roles/create',[RoleController::class,'create'])->name('roles.create');
+    Route::post('/roles/create',[RoleController::class,'store']);
 });
