@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Users\UserController;
+use App\Http\Controllers\Users\RoleController;
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -59,4 +60,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/users/create',[UserController::class,'store']);
     Route::get('/users/{id}/edit',[UserController::class,'edit'])->name('users.edit');
     Route::post('/users/{id}',[UserController::class,'update'])->name('users.update');
+
+    Route::get('/roles',[RoleController::class,'index'])->name('roles.index');
 });

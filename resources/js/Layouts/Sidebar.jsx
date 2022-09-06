@@ -7,6 +7,9 @@ import { Icon } from '@iconify/react';
 import ListItem from './Menu/ListItem';
 
 export default function Sidebar({auth}) {
+
+    let usersRoute = [{route:'users',title:'Users'},{route:'users.create',title:'Create User'}];
+    let rolesRoute = [{route:'roles.index',title:'Roles'},{route:'users.create',title:'Create Role'}];    
     return (
         <div className="flex">
             <div className="flex flex-col h-screen p-3 bg-gray-800 shadow w-60">
@@ -105,7 +108,9 @@ export default function Sidebar({auth}) {
                                 </a>
 
                             </li>
-                            { auth.is_admin && <ListItem child="true" />
+                            { auth.is_admin && <ListItem title="Users" childs={usersRoute} faicon='user' />
+                            }
+                            { auth.is_admin && <ListItem title="Roles" childs={rolesRoute} faicon='user' />
                             }
                             <li className="rounded-sm">
                                 <a
