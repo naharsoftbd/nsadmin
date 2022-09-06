@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
+use App\Models\Role;
 
 class RegisteredUserController extends Controller
 {
@@ -47,6 +48,8 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
+        $subs_role = Role::where('slug','subscriber')->first();
+        $user->roles()->attach($subs_role);
 
         Auth::login($user);
 

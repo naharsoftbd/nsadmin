@@ -55,6 +55,10 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
+    
+});
+
+Route::middleware('auth','role:admin')->group(function () {
     Route::get('/users',[UserController::class,'index'])->name('users');
     Route::get('/users/create',[UserController::class,'create'])->name('users.create');
     Route::post('/users/create',[UserController::class,'store']);
