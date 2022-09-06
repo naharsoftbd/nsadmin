@@ -121,6 +121,7 @@ class UserController extends Controller
             $user = User::find($id);
             return Inertia::render('Users/Edit', [
                 'user' => $user,
+                'role' => $user->roles->first()->id,
                 'status' => session('status'),
             ]);
 
@@ -152,6 +153,9 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        $user = User::find($id);
+        $user->roles()->sync($request->role);
 
         event(new Registered($user));
 

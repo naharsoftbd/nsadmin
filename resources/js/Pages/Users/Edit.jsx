@@ -6,6 +6,7 @@ import Input from '@/Components/Input';
 import InputError from '@/Components/InputError';
 import Label from '@/Components/Label';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
+import Select from '@/Components/Select';
 
 export default function Edit(props){
     console.log(props.user);
@@ -14,6 +15,8 @@ export default function Edit(props){
         email: props.user.email,
         password: '',
         password_confirmation: '',
+        role:props.role
+
     });
 
     useEffect(() => {
@@ -30,6 +33,12 @@ export default function Edit(props){
         e.preventDefault();
 
         post(route('users.update',[props.user.id]));
+    };
+
+    let options = [{value:1,label:"Admin"},{value:2,label:'Subscriber'}];
+
+    const onSelectHandleChange = (e) => {
+        setData({ ...data, [e.target.name]: e.target.value });
     };
 
 	return (
@@ -103,6 +112,10 @@ export default function Edit(props){
                     />
 
                     <InputError message={errors.password_confirmation} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <Select id="user_role" name="role" onChange={onSelectHandleChange} className="test" options={options} placeholder="Role" required="required" value={data.role} />
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
