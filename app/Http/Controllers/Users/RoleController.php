@@ -32,7 +32,7 @@ class RoleController extends Controller
                     'slug' => $role->slug,
                     'created_at' => $role->created_at,
                     'updated_at' => $role->updated_at,
-                    'edit_url' => URL::route('users.edit', $role),
+                    'edit_url' => URL::route('roles.edit', $role),
                 ];
             });
 
@@ -132,7 +132,20 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        //
+        if(Auth::user()->hasRole('admin')){
+
+            $role = Role::find($id);
+
+            return Inertia::render('Users/RoleEdit', [
+                'role' => $role,
+                'permission' => $role->permissions()->get(),
+                'status' => session('status'),
+            ]);
+
+        }else{
+
+            return redirect()->intended('/dashboard');
+        }
     }
 
     /**
