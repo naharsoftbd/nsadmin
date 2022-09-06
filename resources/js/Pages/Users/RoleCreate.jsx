@@ -6,11 +6,16 @@ import Input from '@/Components/Input';
 import InputError from '@/Components/InputError';
 import Label from '@/Components/Label';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
+import Checkbox from '@/Components/Checkbox';
 
 export default function RoleCreate(props){
+    console.log(props.permissions);
 	const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         slug: '',
+        create:'',
+        edit:'',
+        read:'',
     });
 
     useEffect(() => {
@@ -28,6 +33,18 @@ export default function RoleCreate(props){
 
         post(route('roles.create'));
     };
+
+    let permissionCheckBox = props.permissions.map((permission,index) => 
+            <Permissionset key={index} permission={permission} />
+        );
+    function Permissionset(props){
+        return(
+              <>
+                <Checkbox name={props.permission.slug} value={data.create ? true:data.edit ? true:data.read ? true:false} handleChange={onHandleChange} />
+                <span className="ml-2 text-sm text-gray-600">{props.permission.name}</span>
+              </>
+            );
+    }
 
 	return (
 		 <Authenticated
@@ -71,12 +88,15 @@ export default function RoleCreate(props){
                     <InputError message={errors.slug} className="mt-2" />
                 </div>
 
-                <div className="mt-4">
-                    <Label forInput="permission" value="Permissions" />
-
-                
-
-                    <InputError message={errors.permission} className="mt-2" />
+                <div className="block mt-4">
+                    <label className="flex items-center">
+                        <Checkbox name="create" value={data.create} handleChange={onHandleChange} />
+                        <span className="ml-2 text-sm text-gray-600">Create</span>
+                        <Checkbox name="edit" value={data.edit} handleChange={onHandleChange} />
+                        <span className="ml-2 text-sm text-gray-600">Edit</span>
+                        <Checkbox name="read" value={data.read} handleChange={onHandleChange} />
+                        <span className="ml-2 text-sm text-gray-600">Read</span>
+                    </label>
                 </div>
 
                 <div className="flex items-center justify-end mt-4">

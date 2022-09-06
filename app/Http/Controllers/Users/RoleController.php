@@ -12,6 +12,7 @@ use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use URL;
 use App\Models\Role;
+use App\Models\Permission;
 
 class RoleController extends Controller
 {
@@ -55,8 +56,9 @@ class RoleController extends Controller
     {
         if(Auth::user()->hasRole('admin')){
 
-            $users = User::all();
+            $permissions = Permission::all();
             return Inertia::render('Users/RoleCreate', [
+                'permissions' => $permissions,
                 'status' => session('status'),
             ]);
 
@@ -74,15 +76,39 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->all());
+
         $request->validate([
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255',
         ]);
 
-        $user = Role::create([
+        $role = Role::create([
             'name' => $request->name,
             'slug' => $request->slug,
         ]);
+
+        if($request->create){
+
+            $create_permission = Permission::where('slug', 'create')->first(); 
+            $role->permissions()->attach($create_permission); 
+
+        }
+
+        if($request->edit){
+            
+            $edit_permission = Permission::where('slug', 'edit')->first(); 
+            $role->permissions()->attach($edit_permission);
+
+        }
+
+        if($request->read){
+
+            $read_permission = Permission::where('slug', 'read')->first(); 
+            $role->permissions()->attach($read_permission);
+        }
+
+        
 
         return redirect('roles');
     }
