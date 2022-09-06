@@ -121,7 +121,7 @@ class UserController extends Controller
             $user = User::find($id);
             return Inertia::render('Users/Edit', [
                 'user' => $user,
-                'role' => $user->roles->first()->id,
+                'role' => $user->roles->first() ? $user->roles->first()->id:0,
                 'status' => session('status'),
             ]);
 
