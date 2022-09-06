@@ -13,9 +13,9 @@ export default function RoleEdit(props){
 	const { data, setData, post, processing, errors, reset } = useForm({
         name: props.role.name,
         slug: props.role.slug,
-        create:props.permission[0]?.slug ? true:false,
-        edit:props.permission[1]?.slug ? true:false,
-        read:props.permission[2]?.slug ? true:false,
+        create:(props.permission[0]?.slug=='create' || props.permission[1]?.slug=='create' || props.permission[2]?.slug=='create') ? true:false,
+        edit:(props.permission[0]?.slug=='edit' || props.permission[1]?.slug=='edit' || props.permission[2]?.slug=='edit') ? true:false,
+        read:(props.permission[0]?.slug=='read' || props.permission[1]?.slug=='read' || props.permission[2]?.slug=='read') ? true:false,
     });
 
     useEffect(() => {
