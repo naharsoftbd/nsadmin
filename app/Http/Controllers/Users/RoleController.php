@@ -157,7 +157,41 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255',
+        ]);
+
+        $role = Role::find($id);
+
+        $role = $role->update([
+            'name' => $request->name,
+            'slug' => $request->slug,
+        ]);
+
+        if($request->create){
+
+            $create_permission = Permission::where('slug', 'create')->first(); 
+            $role->permissions()->attach($create_permission); 
+
+        }
+
+        if($request->edit){
+            
+            $edit_permission = Permission::where('slug', 'edit')->first(); 
+            $role->permissions()->attach($edit_permission);
+
+        }
+
+        if($request->read){
+
+            $read_permission = Permission::where('slug', 'read')->first(); 
+            $role->permissions()->sync($read_permission->id);
+        }
+
+        
+
+        return redirect('roles');
     }
 
     /**

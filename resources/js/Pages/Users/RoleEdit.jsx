@@ -31,7 +31,7 @@ export default function RoleEdit(props){
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('roles.update'));
+        post(route('roles.update',[props.role.id]));
     };
 
 	return (
