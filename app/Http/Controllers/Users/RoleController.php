@@ -28,6 +28,7 @@ class RoleController extends Controller
                 return [
                     'id' => $role->id,
                     'name' => $role->name,
+                    'slug' => $role->slug,
                     'created_at' => $role->created_at,
                     'updated_at' => $role->updated_at,
                     'edit_url' => URL::route('users.edit', $role),
@@ -52,7 +53,17 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        if(Auth::user()->hasRole('admin')){
+
+            $users = User::all();
+            return Inertia::render('Users/RoleCreate', [
+                'status' => session('status'),
+            ]);
+
+        }else{
+
+            return redirect()->intended('/dashboard');
+        }
     }
 
     /**

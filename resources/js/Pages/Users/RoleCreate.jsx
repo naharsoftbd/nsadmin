@@ -6,15 +6,13 @@ import Input from '@/Components/Input';
 import InputError from '@/Components/InputError';
 import Label from '@/Components/Label';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
-import Select from '@/Components/Select';
 
-export default function Create(props){
+export default function RoleCreate(props){
 	const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
         password: '',
         password_confirmation: '',
-        role:''
     });
 
     useEffect(() => {
@@ -30,13 +28,7 @@ export default function Create(props){
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('users.create'));
-    };
-
-    let options = [{value:1,label:"Admin"},{value:2,label:'Subscriber'}];
-
-    const onSelectHandleChange = (e) => {
-        setData({ ...data, [e.target.name]: e.target.value });
+        post(route('user.create'));
     };
 
 	return (
@@ -66,19 +58,19 @@ export default function Create(props){
                 </div>
 
                 <div className="mt-4">
-                    <Label forInput="email" value="Email" />
+                    <Label forInput="slug" value="Slug" />
 
                     <Input
-                        type="email"
-                        name="email"
-                        value={data.email}
+                        type="text"
+                        name="slug"
+                        value={data.slug}
                         className="mt-1 block w-full"
                         autoComplete="username"
                         handleChange={onHandleChange}
                         required
                     />
 
-                    <InputError message={errors.email} className="mt-2" />
+                    <InputError message={errors.slug} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
@@ -95,25 +87,6 @@ export default function Create(props){
                     />
 
                     <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <Label forInput="password_confirmation" value="Confirm Password" />
-
-                    <Input
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        handleChange={onHandleChange}
-                        required
-                    />
-
-                    <InputError message={errors.password_confirmation} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <Select id="user_role" name="role" onChange={onSelectHandleChange} className="test" options={options} placeholder="Role" required="required" value={data.role} />
                 </div>
 
                 <div className="flex items-center justify-end mt-4">

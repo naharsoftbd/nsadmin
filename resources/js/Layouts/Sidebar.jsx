@@ -9,7 +9,7 @@ import ListItem from './Menu/ListItem';
 export default function Sidebar({auth}) {
 
     let usersRoute = [{route:'users',title:'Users'},{route:'users.create',title:'Create User'}];
-    let rolesRoute = [{route:'roles.index',title:'Roles'},{route:'users.create',title:'Create Role'}];    
+    let rolesRoute = [{route:'roles.index',title:'Roles'},{route:'roles.create',title:'Create Role'}];    
     return (
         <div className="flex">
             <div className="flex flex-col h-screen p-3 bg-gray-800 shadow w-60">

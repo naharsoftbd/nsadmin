@@ -66,4 +66,5 @@ Route::middleware('auth','role:admin')->group(function () {
     Route::post('/users/{id}',[UserController::class,'update'])->name('users.update');
 
     Route::get('/roles',[RoleController::class,'index'])->name('roles.index');
+    Route::get('/roles/create',[RoleController::class,'create'])->name('roles.create');
 });

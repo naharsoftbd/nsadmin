@@ -20,8 +20,8 @@ export default function Roles(props){
         sortable: true,
     },
     {
-        name: 'Email',
-        selector: row => row.email,
+        name: 'Slug',
+        selector: row => row.slug,
         sortable: true,
     },
     {

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use URL;
+use App\Models\Role;
 
 class UserController extends Controller
 {
@@ -75,6 +76,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -86,6 +88,9 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        $role = Role::find($request->role);
+        $user->roles()->attach($role);
 
         event(new Registered($user));
 
