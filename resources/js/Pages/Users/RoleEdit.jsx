@@ -9,13 +9,13 @@ import { Head, Link, useForm } from '@inertiajs/inertia-react';
 import Checkbox from '@/Components/Checkbox';
 
 export default function RoleEdit(props){
-    console.log(props.role);
+    console.log(props.permission[0]?.slug);
 	const { data, setData, post, processing, errors, reset } = useForm({
         name: props.role.name,
         slug: props.role.slug,
-        create:true,
-        edit:true,
-        read:true,
+        create:props.permission[0]?.slug ? true:false,
+        edit:props.permission[1]?.slug ? true:false,
+        read:props.permission[2]?.slug ? true:false,
     });
 
     useEffect(() => {
