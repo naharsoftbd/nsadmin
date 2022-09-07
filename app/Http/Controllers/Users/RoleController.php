@@ -157,6 +157,8 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $permission = [];
+
         $request->validate([
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255',
@@ -169,27 +171,21 @@ class RoleController extends Controller
             'slug' => $request->slug,
         ]);
 
-        if($request->create){
+        $role = Role::find($id);
 
-            $create_permission = Permission::where('slug', 'create')->first(); 
-            $role->permissions()->attach($create_permission); 
-
+        if($request->create){ 
+            array_push($permission, 1);
         }
 
         if($request->edit){
-            
-            $edit_permission = Permission::where('slug', 'edit')->first(); 
-            $role->permissions()->attach($edit_permission);
-
+            array_push($permission, 2);
         }
 
         if($request->read){
-
-            $read_permission = Permission::where('slug', 'read')->first(); 
-            $role->permissions()->sync($read_permission->id);
+            array_push($permission, 3);
         }
 
-        
+        $role->permissions()->sync($permission);
 
         return redirect('roles');
     }
