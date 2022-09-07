@@ -3,8 +3,10 @@ import { Icon } from '@iconify/react';
 import { Link } from '@inertiajs/inertia-react';
 import { Inertia } from '@inertiajs/inertia';
 
-export default function ListItem({title, parentslug, childs, faicon}) {
+export default function ListItem({title, parentslug, menu_method, childs, faicon}) {
   const [show, setShow] = React.useState(false);
+
+  console.log(menu_method);
   
   const listItems = childs.map((child,index) =>
      <ListItem key={index} child={child} />
@@ -17,7 +19,7 @@ export default function ListItem({title, parentslug, childs, faicon}) {
           <li onClick={() => setShow(true)}>
             <Link
             href={route(props?.child?.slug)}
-            method='get'
+            method={props?.child?.menu_method}
             as='a'
             className="flex items-center p-2 space-x-3 rounded-md"
             >
@@ -29,7 +31,7 @@ export default function ListItem({title, parentslug, childs, faicon}) {
 }
   return (
     <li className="rounded-sm">
-    <button className="flex items-center p-2 space-x-3 rounded-md" onClick={() =>{setShow(prev => !prev); parentslug ? Inertia.visit(route(parentslug), { method: 'post' }):null;}}>
+    <button className="flex items-center p-2 space-x-3 rounded-md" onClick={() =>{setShow(prev => !prev); parentslug ? Inertia.visit(route(parentslug), { method: menu_method }):null;}}>
       <Icon className="text-white" icon={faicon} />
       <span className="text-gray-100">{title}</span>
     </button>

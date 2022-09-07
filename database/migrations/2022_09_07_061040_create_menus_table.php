@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->nullable();
+            $table->string('menu_method')->nullable();
             $table->string('menu_icon')->nullable();
             $table->timestamps();
         });

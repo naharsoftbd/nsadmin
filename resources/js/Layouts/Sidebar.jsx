@@ -9,7 +9,7 @@ import ListItem from './Menu/ListItem';
 export default function Sidebar({auth, menus}) {
 
   const mainMenuM = menus.map((menu) => 
-            <ListItem title={menu.name} parentslug={menu.slug} childs={menu.childmenus} faicon={menu.menu_icon} />
+            <ListItem title={menu.name} parentslug={menu.slug} menu_method={menu.menu_method} childs={menu.childmenus} faicon={menu.menu_icon} />
     );      
     return (
         <div className="flex">
