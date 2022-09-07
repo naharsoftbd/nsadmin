@@ -26,9 +26,9 @@ class MenuSeeder extends Seeder
             'updated_at' => Carbon::now()
             ],
             [
-            'name' => 'Inbox',
-            'slug' => '',
-            'menu_method' => '',
+            'name' => 'Menus',
+            'slug' => 'menus',
+            'menu_method' => 'get',
             'menu_icon' => 'ant-design:mail-filled',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()

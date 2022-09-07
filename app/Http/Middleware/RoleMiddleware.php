@@ -18,13 +18,15 @@ class RoleMiddleware
     {
         if(!$request->user()->hasRole($role)) {
 
-             abort(404);
+             //abort(404);
+            return redirect('/dashboard');
 
         }
 
         if($permission !== null && !$request->user()->can($permission)) {
 
-              abort(404);
+              //abort(404);
+            return redirect('/dashboard');
         }
 
         return $next($request);

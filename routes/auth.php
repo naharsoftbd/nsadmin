@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Users\UserController;
 use App\Http\Controllers\Users\RoleController;
+use App\Http\Controllers\Menu\MenuController;
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -58,7 +59,7 @@ Route::middleware('auth')->group(function () {
     
 });
 
-Route::middleware('auth','role:admin')->group(function () {
+Route::middleware(['auth','role:admin'])->group(function () {
     Route::get('/users',[UserController::class,'index'])->name('users');
     Route::get('/users/create',[UserController::class,'create'])->name('users.create');
     Route::post('/users/create',[UserController::class,'store']);
@@ -72,4 +73,8 @@ Route::middleware('auth','role:admin')->group(function () {
     Route::get('/roles/{id}/edit',[RoleController::class,'edit'])->name('roles.edit');
     Route::post('/roles/{id}',[RoleController::class,'update'])->name('roles.update');
     Route::delete('/roles/{id}/delete',[RoleController::class,'destroy'])->name('roles.delete');
+
+    Route::get('/menus',[MenuController::class,'index'])->name('menus.index');
+    Route::get('/menus/create',[MenuController::class,'create'])->name('menus.create');
+    Route::post('/menus/create',[MenuController::class,'store']);
 });
