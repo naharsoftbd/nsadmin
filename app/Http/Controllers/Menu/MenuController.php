@@ -83,7 +83,21 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255',
+        ]);
+
+        $menu = Menu::create([
+            'name' => $request->name,
+            'slug' => $request->slug
+        ]);
+
+
+        event(new Registered($menu));
+
+        return redirect('menus.index');
     }
 
     /**
