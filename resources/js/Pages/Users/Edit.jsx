@@ -45,6 +45,7 @@ export default function Edit(props){
 		 <Authenticated
             auth={props.auth}
             errors={props.errors}
+            menu={props.menu}
         >
         	<div className="container mx-4 mt-12">
                     <Head title="Register" />

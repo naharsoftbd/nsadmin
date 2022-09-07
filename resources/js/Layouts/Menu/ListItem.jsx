@@ -11,17 +11,18 @@ export default function ListItem({title,childs, faicon}) {
 
   function ListItem(props) {
   // Correct! There is no need to specify the key here:
-  let icon = "fa6-solid:"+faicon;
+  //let icon = "fa6-solid:"+faicon;
+   console.log(props?.child?.slug);
    return(    
           <li onClick={() => setShow(true)}>
             <Link
-            href={route(props.child.route)}
+            href={route(props?.child?.slug)}
             method='get'
             as='a'
             className="flex items-center p-2 space-x-3 rounded-md"
             >
-            <Icon className="text-white" icon={icon} />
-            <span className="text-gray-100">{props.child.title}</span>
+            <Icon className="text-white" icon={props?.child?.menu_icon} />
+            <span className="text-gray-100">{props?.child?.name}</span>
             </Link>
           </li>
       ) 
@@ -29,7 +30,7 @@ export default function ListItem({title,childs, faicon}) {
   return (
     <li className="rounded-sm">
     <button className="flex items-center p-2 space-x-3 rounded-md" onClick={() => setShow(prev => !prev)}>
-      <Icon className="text-white" icon="fa6-solid:users" />
+      <Icon className="text-white" icon={faicon} />
       <span className="text-gray-100">{title}</span>
     </button>
       

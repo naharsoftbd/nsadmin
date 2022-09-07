@@ -5,11 +5,13 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/inertia-react';
 import { Icon } from '@iconify/react';
 import ListItem from './Menu/ListItem';
-import {usersRoute, rolesRoute} from './Menu/MenuItem';
+import {usersRoute, rolesRoute, mainMenu} from './Menu/MenuItem';
 
-export default function Sidebar({auth}) {
+export default function Sidebar({auth, menus}) {
 
-        
+  const mainMenuM = menus.map((menu) => 
+            <ListItem title={menu.name} childs={menu.childmenus} faicon={menu.menu_icon} />
+    );      
     return (
         <div className="flex">
             <div className="flex flex-col h-screen p-3 bg-gray-800 shadow w-60">
@@ -48,57 +50,13 @@ export default function Sidebar({auth}) {
                     </div>
                     <div className="flex-1">
                         <ul className="pt-2 pb-4 space-y-1 text-sm">
-                            <li className="rounded-sm">                                
-                                <Link
-                                href={route('dashboard')}
-                                method='get'
-                                as='a'
-                                className="flex items-center p-2 space-x-3 rounded-md"
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="w-6 h-6 text-gray-100"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                        strokeWidth={2}
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                                        />
-                                    </svg>
-                                    <span className="text-gray-100">Home</span>
-                                </Link>
-                            </li>
-                            <li className="rounded-sm">
-                                <a
-                                    href="#"
-                                    className="flex items-center p-2 space-x-3 rounded-md"
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="w-6 h-6 text-gray-100"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                        strokeWidth={2}
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                                        />
-                                    </svg>
-                                    <span className="text-gray-100">Inbox</span>
-                                </a>
+                            
+                            {mainMenuM}
 
-                            </li>
-                            { auth.is_admin && <ListItem title="Users" childs={usersRoute} faicon='user' />
+                            {/*{ auth.is_admin && <ListItem title="Users" childs={usersRoute} faicon='user' />
                             }
                             { auth.is_admin && <ListItem title="Roles" childs={rolesRoute} faicon='user' />
-                            }
+                            }*/}
                             <li className="rounded-sm">
                                 <a
                                     href="#"

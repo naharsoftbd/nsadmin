@@ -7,6 +7,7 @@ export default function Dashboard(props) {
         <Authenticated
             auth={props.auth}
             errors={props.errors}
+            menu={props.menu}
         >            
             <div className="container mx-auto mt-12">
                 <div className="grid grid-cols-1 gap-6 mb-6 lg:grid-cols-3">

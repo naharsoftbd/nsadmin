@@ -7,7 +7,7 @@ import { Link } from '@inertiajs/inertia-react';
 import { Head } from '@inertiajs/inertia-react';
 import Sidebar from '@/Layouts/Sidebar';
 
-export default function Authenticated({ auth, header, children }) {
+export default function Authenticated({ auth, header, children, menu }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
@@ -24,7 +24,7 @@ export default function Authenticated({ auth, header, children }) {
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    { auth?.is_admin ? auth?.role?.name:auth?.role?.name} Dashboard
+                                  Dashboard
                                 </NavLink>
                             </div>
                         </div>
@@ -122,7 +122,7 @@ export default function Authenticated({ auth, header, children }) {
             <main>
               <div className="flex">
                 <Head title="Dashboard" />            
-                <Sidebar auth={auth}/>
+                <Sidebar auth={auth} menus={menu} />
                 {children}
                </div>
             </main>
