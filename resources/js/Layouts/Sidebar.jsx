@@ -5,11 +5,11 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/inertia-react';
 import { Icon } from '@iconify/react';
 import ListItem from './Menu/ListItem';
+import {usersRoute, rolesRoute} from './Menu/MenuItem';
 
 export default function Sidebar({auth}) {
 
-    let usersRoute = [{route:'users',title:'Users'},{route:'users.create',title:'Create User'}];
-    let rolesRoute = [{route:'roles.index',title:'Roles'},{route:'roles.create',title:'Create Role'}];    
+        
     return (
         <div className="flex">
             <div className="flex flex-col h-screen p-3 bg-gray-800 shadow w-60">
@@ -72,19 +72,6 @@ export default function Sidebar({auth}) {
                                     <span className="text-gray-100">Home</span>
                                 </Link>
                             </li>
-                            { auth.is_admin &&
-                            <li className="rounded-sm">
-                                <Link
-                                href={route('users')}
-                                method='get'
-                                as='a'
-                                className="flex items-center p-2 space-x-3 rounded-md"
-                                >
-                                    <Icon className="text-white" icon="fa6-solid:users" />
-                                    <span className="text-gray-100">Users</span>
-                                </Link>
-                            </li>
-                            }
                             <li className="rounded-sm">
                                 <a
                                     href="#"

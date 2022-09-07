@@ -114,9 +114,10 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
     const contextActions = React.useMemo(() => {
         const handleDelete = () => {
             
-            if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.email)}?`)) {
+            if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.name)}?`)) {
                 setToggleCleared(!toggleCleared);
-                 setFilteredData(differenceBy(filteredItems, selectedRows, 'email'));
+                selectedRows.map((row) => Inertia.visit(route('roles.delete',row.id), { method: 'delete' }));
+                setFilteredData(differenceBy(filteredItems, selectedRows, 'slug'));
             }
         };
 

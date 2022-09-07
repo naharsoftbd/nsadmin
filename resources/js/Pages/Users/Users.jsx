@@ -121,7 +121,9 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
             
             if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.email)}?`)) {
                 setToggleCleared(!toggleCleared);
-                 setFilteredData(differenceBy(filteredItems, selectedRows, 'email'));
+                //.log(r.id);
+                selectedRows.map((row) => Inertia.visit(route('users.delete',row.id), { method: 'delete' }));
+                setFilteredData(differenceBy(filteredItems, selectedRows, 'email'));
             }
         };
 

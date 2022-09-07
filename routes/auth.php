@@ -64,10 +64,12 @@ Route::middleware('auth','role:admin')->group(function () {
     Route::post('/users/create',[UserController::class,'store']);
     Route::get('/users/{id}/edit',[UserController::class,'edit'])->name('users.edit');
     Route::post('/users/{id}',[UserController::class,'update'])->name('users.update');
+    Route::delete('/users/{id}/delete',[UserController::class,'destroy'])->name('users.delete');
 
     Route::get('/roles',[RoleController::class,'index'])->name('roles.index');
     Route::get('/roles/create',[RoleController::class,'create'])->name('roles.create');
     Route::post('/roles/create',[RoleController::class,'store']);
     Route::get('/roles/{id}/edit',[RoleController::class,'edit'])->name('roles.edit');
     Route::post('/roles/{id}',[RoleController::class,'update'])->name('roles.update');
+    Route::delete('/roles/{id}/delete',[RoleController::class,'destroy'])->name('roles.delete');
 });
