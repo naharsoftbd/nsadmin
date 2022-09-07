@@ -1,8 +1,9 @@
 import React, { useState }  from "react";
 import { Icon } from '@iconify/react';
 import { Link } from '@inertiajs/inertia-react';
+import { Inertia } from '@inertiajs/inertia';
 
-export default function ListItem({title,childs, faicon}) {
+export default function ListItem({title, parentslug, childs, faicon}) {
   const [show, setShow] = React.useState(false);
   
   const listItems = childs.map((child,index) =>
@@ -12,7 +13,6 @@ export default function ListItem({title,childs, faicon}) {
   function ListItem(props) {
   // Correct! There is no need to specify the key here:
   //let icon = "fa6-solid:"+faicon;
-   console.log(props?.child?.slug);
    return(    
           <li onClick={() => setShow(true)}>
             <Link
@@ -29,7 +29,7 @@ export default function ListItem({title,childs, faicon}) {
 }
   return (
     <li className="rounded-sm">
-    <button className="flex items-center p-2 space-x-3 rounded-md" onClick={() => setShow(prev => !prev)}>
+    <button className="flex items-center p-2 space-x-3 rounded-md" onClick={() =>{setShow(prev => !prev); parentslug ? Inertia.visit(route(parentslug), { method: 'post' }):null;}}>
       <Icon className="text-white" icon={faicon} />
       <span className="text-gray-100">{title}</span>
     </button>
