@@ -53,7 +53,7 @@ export default function RoleCreate(props){
             menu={props.menu}
         >
         	<div className="container mx-4 mt-12">
-                    <Head title="Register" />
+                    <Head title="Create Role" />
 
             <form onSubmit={submit}>
                 <div>

@@ -147,7 +147,7 @@ const handleEditButtonClick = (url) => {
         >
         	<div className="container mx-4 mt-12">
                     <DataTable
-                         title="Contact List"
+                         title="Users List"
                          columns={columns}
                          data={(filteredData.length || toggleCleared) ? filteredData:filteredItems}
                          pagination

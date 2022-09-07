@@ -48,7 +48,7 @@ export default function Edit(props){
             menu={props.menu}
         >
         	<div className="container mx-4 mt-12">
-                    <Head title="Register" />
+                    <Head title="Edit User" />
 
             <form onSubmit={submit}>
                 <div>

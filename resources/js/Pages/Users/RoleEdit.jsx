@@ -41,7 +41,7 @@ export default function RoleEdit(props){
             menu={props.menu}
         >
         	<div className="container mx-4 mt-12">
-                    <Head title="Register" />
+                    <Head title="Edit Role" />
 
             <form onSubmit={submit}>
                 <div>

@@ -46,7 +46,7 @@ export default function Create(props){
             menu={props.menu}
         >
         	<div className="container mx-4 mt-12">
-                    <Head title="Register" />
+                    <Head title="Create User" />
 
             <form onSubmit={submit}>
                 <div>
