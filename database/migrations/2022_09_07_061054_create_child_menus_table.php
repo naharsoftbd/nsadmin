@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('menu_method')->nullable();
             $table->string('menu_icon')->nullable();
             $table->foreignId('menu_id')->constrained('menus');
+            $table->integer('order_by')->nullable();
             $table->timestamps();
         });
     }

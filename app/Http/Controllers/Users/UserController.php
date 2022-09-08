@@ -23,7 +23,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->hasRole('admin')){
+        if(Auth::user()->can(['edit']) || Auth::user()->can(['read'])){
 
             $users = User::all()->map(function ($user) {
                 return [
@@ -33,7 +33,7 @@ class UserController extends Controller
                     'created_at' => $user->created_at,
                     'updated_at' => $user->updated_at,
                     'email_verified_at' => $user->email_verified_at,
-                    'edit_url' => URL::route('users.edit', $user),
+                    'edit_url' => Auth::user()->can('edit') ? URL::route('users.edit', $user):null,
                 ];
             });
 
@@ -55,7 +55,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->hasRole('admin')){
+        if(Auth::user()->can(['create'])){
 
             $roles = Role::all()->map(function ($role) {
                 return [
@@ -122,7 +122,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        if(Auth::user()->hasRole('admin')){
+        if(Auth::user()->can(['edit'])){
 
             $user = User::find($id);
 

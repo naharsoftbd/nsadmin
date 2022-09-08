@@ -8,10 +8,14 @@ import Label from '@/Components/Label';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
 import Select from '@/Components/Select';
 
-export default function Create(props){
+export default function Edit(props){
+
 	const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
-        slug: '',
+        name: props.editmenu.name,
+        slug: props.editmenu.slug,
+        order_by: props.editmenu.order_by,
+        menu_method: props.editmenu.menu_method,
+        menu_icon: props.editmenu.menu_icon,
         role:''
     });
 
@@ -28,10 +32,8 @@ export default function Create(props){
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('menus.create'));
+        post(route('menus.update',[props.editmenu.id]));
     };
-
-    let options = [{value:1,label:"Admin"},{value:2,label:'Subscriber'}];
 
     const onSelectHandleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value });
@@ -79,23 +81,8 @@ export default function Create(props){
 
                     <InputError message={errors.slug} className="mt-2" />
                 </div>
-                <div className="mt-4 w-1/4">
-                    <Label forInput="order_by" value="Order" />
-
-                    <Input
-                        type="text"
-                        name="order_by"
-                        value={data.order_by}
-                        className="mt-1 block w-full"
-                        autoComplete="order_by"
-                        handleChange={onHandleChange}
-                        required
-                    />
-
-                    <InputError message={errors.order_by} className="mt-2" />
-                </div>
                 <div className="mt-4">
-                    <Label forInput="menu_method" value="Method" />
+                    <Label forInput="menu_method" value="Menu Method" />
 
                     <Input
                         type="text"
@@ -110,7 +97,7 @@ export default function Create(props){
                     <InputError message={errors.menu_method} className="mt-2" />
                 </div>
                 <div className="mt-4">
-                    <Label forInput="menu_icon" value="Icon" />
+                    <Label forInput="menu_icon" value="Menu Icon" />
 
                     <Input
                         type="text"
@@ -122,7 +109,22 @@ export default function Create(props){
                         required
                     />
 
-                    <InputError message={errors.menu_icon} className="mt-2" />
+                    <InputError message={errors.menu_method} className="mt-2" />
+                </div>
+                <div className="mt-4 w-1/4">
+                    <Label forInput="order_by" value="Order" />
+
+                    <Input
+                        type="text"
+                        name="order_by"
+                        value={data.order_by}
+                        className="mt-1 block w-full"
+                        autoComplete="order_by"
+                        handleChange={onHandleChange}
+                        required
+                    />
+
+                    <InputError message={errors.order_by} className="mt-2" />
                 </div>
                 <div className="mt-4">
                     <Select id="user_role" name="role" onChange={onSelectHandleChange} className="test" options={props.roles} placeholder="Role" required="required" value={data.role} />

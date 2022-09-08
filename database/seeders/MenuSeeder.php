@@ -77,6 +77,24 @@ class MenuSeeder extends Seeder
 
         DB::table('child_menus')->insert([
             [
+            'name' => 'Menus',
+            'slug' => 'menus.index',
+            'menu_method' => 'get',
+            'menu_icon' => "ant-design:menu-outlined",
+            'menu_id' => 2,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+            ],
+            [
+            'name' => 'Create Menu',
+            'slug' => 'menus.create',
+            'menu_method' => 'get',
+            'menu_icon' => "ant-design:menu-outlined",
+            'menu_id' => 2,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+            ],
+            [
             'name' => 'Users',
             'slug' => 'users',
             'menu_method' => 'get',

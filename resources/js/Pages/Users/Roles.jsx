@@ -129,9 +129,10 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
     }, [filteredItems, selectedRows, toggleCleared]);
 
 const handleEditButtonClick = (url) => {
-   console.log(url);
-   Inertia.visit(url, { method: 'get' })
+     url ? Inertia.visit(url, { method: 'get' }):null;
  };
+
+ const rowDisabledCriteria = row => row.edit_url == null;
 
 	return (
 		 <Authenticated
@@ -153,6 +154,7 @@ const handleEditButtonClick = (url) => {
                          contextActions={contextActions}
                          onSelectedRowsChange={handleRowSelected}
                          clearSelectedRows={toggleCleared}
+                         selectableRowDisabled={rowDisabledCriteria}
                      />
             </div>
         </Authenticated>

@@ -25,6 +25,21 @@ export default function Menus(props){
         sortable: true,
     },
     {
+        name: 'Order By',
+        selector: row => row.order_by,
+        sortable: true,
+    },
+    {
+        name: 'Menu Method',
+        selector: row => row.menu_method,
+        sortable: true,
+    },
+    {
+        name: 'Menu Icon',
+        selector: row => row.menu_icon,
+        sortable: true,
+    },
+    {
         name: 'Created At',
         selector: row => row.created_at,
         sortable: true,
@@ -114,11 +129,11 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
     const contextActions = React.useMemo(() => {
         const handleDelete = () => {
             
-            if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.email)}?`)) {
+            if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.name)}?`)) {
                 setToggleCleared(!toggleCleared);
                 //.log(r.id);
-                selectedRows.map((row) => Inertia.visit(route('users.delete',row.id), { method: 'delete' }));
-                setFilteredData(differenceBy(filteredItems, selectedRows, 'email'));
+                selectedRows.map((row) => Inertia.visit(route('menus.delete',row.id), { method: 'delete' }));
+                setFilteredData(differenceBy(filteredItems, selectedRows, 'slug'));
             }
         };
 
@@ -129,10 +144,11 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
         );
     }, [filteredItems, selectedRows, toggleCleared]);
 
-const handleEditButtonClick = (url) => {
-   console.log(url);
-   Inertia.visit(url, { method: 'get' })
- };
+    const handleEditButtonClick = (url) => {
+        url ? Inertia.visit(url, { method: 'get' }):null;
+    };
+
+    const rowDisabledCriteria = row => row.edit_url == null;
 
 	return (
 		 <Authenticated
@@ -154,6 +170,7 @@ const handleEditButtonClick = (url) => {
                          contextActions={contextActions}
                          onSelectedRowsChange={handleRowSelected}
                          clearSelectedRows={toggleCleared}
+                         selectableRowDisabled={rowDisabledCriteria}
                      />
             </div>
         </Authenticated>

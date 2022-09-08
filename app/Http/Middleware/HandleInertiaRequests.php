@@ -35,7 +35,7 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
-        $menu = Menu::with('childmenus')->get();
+        $menu = Menu::with('childmenus')->orderBy('order_by','ASC')->get();
         //dd($menu);
 
         return array_merge(parent::share($request), [

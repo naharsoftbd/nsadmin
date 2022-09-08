@@ -23,7 +23,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->hasRole('admin')){
+        if(Auth::user()->can(['edit']) || Auth::user()->can(['read'])){
 
             $role = Role::all()->map(function ($role) {
                 return [
@@ -32,7 +32,7 @@ class RoleController extends Controller
                     'slug' => $role->slug,
                     'created_at' => $role->created_at,
                     'updated_at' => $role->updated_at,
-                    'edit_url' => URL::route('roles.edit', $role),
+                    'edit_url' => Auth::user()->can('edit') ? URL::route('roles.edit', $role):null,
                 ];
             });
 
@@ -54,7 +54,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->hasRole('admin')){
+        if(Auth::user()->can('create')){
 
             $permissions = Permission::all();
             return Inertia::render('Users/RoleCreate', [
@@ -132,7 +132,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        if(Auth::user()->hasRole('admin')){
+        if(Auth::user()->can('edit')){
 
             $role = Role::find($id);
 

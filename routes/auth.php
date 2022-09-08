@@ -59,7 +59,7 @@ Route::middleware('auth')->group(function () {
     
 });
 
-Route::middleware(['auth','role:admin'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/users',[UserController::class,'index'])->name('users');
     Route::get('/users/create',[UserController::class,'create'])->name('users.create');
     Route::post('/users/create',[UserController::class,'store']);
@@ -77,4 +77,7 @@ Route::middleware(['auth','role:admin'])->group(function () {
     Route::get('/menus',[MenuController::class,'index'])->name('menus.index');
     Route::get('/menus/create',[MenuController::class,'create'])->name('menus.create');
     Route::post('/menus/create',[MenuController::class,'store']);
+    Route::get('/menus/{id}/edit',[MenuController::class,'edit'])->name('menus.edit');
+    Route::post('/menus/{id}',[MenuController::class,'update'])->name('menus.update');
+    Route::delete('/menus/{id}/delete',[MenuController::class,'destroy'])->name('menus.delete');
 });

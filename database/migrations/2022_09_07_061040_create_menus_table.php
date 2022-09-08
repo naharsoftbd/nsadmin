@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('slug')->nullable();
             $table->string('menu_method')->nullable();
             $table->string('menu_icon')->nullable();
+            $table->integer('order_by')->nullable();
             $table->timestamps();
         });
     }
