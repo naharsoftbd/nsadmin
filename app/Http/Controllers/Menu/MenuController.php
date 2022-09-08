@@ -100,7 +100,8 @@ class MenuController extends Controller
             'menu_icon' => $request->menu_icon
         ]);
 
-
+        $role = Role::find($request->role);
+        $menu->roles()->attach($role);
         event(new Registered($menu));
 
         return redirect()->intended('/dashboard');
@@ -139,6 +140,7 @@ class MenuController extends Controller
             return Inertia::render('Menus/Edit', [
                 'roles' => $roles,
                 'editmenu' => $editmenu,
+                'role' => $editmenu->roles->first() ? $editmenu->roles->first()->id:0,
                 'status' => session('status'),
             ]);
 
@@ -173,6 +175,8 @@ class MenuController extends Controller
         ]);
 
 
+        $menu = Menu::find($id);
+        $menu->roles()->sync($request->role);
         event(new Registered($menu));
 
         return redirect()->intended('/menus');

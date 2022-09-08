@@ -26,4 +26,8 @@ class Menu extends Model
     public function childmenus(){
         return $this->hasMany(ChildMenu::class);
     }
+
+    public function roles(){
+        return $this->belongsToMany(Role::class);
+    }
 }

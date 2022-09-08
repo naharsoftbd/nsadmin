@@ -16,7 +16,7 @@ export default function Edit(props){
         order_by: props.editmenu.order_by,
         menu_method: props.editmenu.menu_method,
         menu_icon: props.editmenu.menu_icon,
-        role:''
+        role:props.role
     });
 
     useEffect(() => {
@@ -76,7 +76,6 @@ export default function Edit(props){
                         className="mt-1 block w-full"
                         autoComplete="slug"
                         handleChange={onHandleChange}
-                        required
                     />
 
                     <InputError message={errors.slug} className="mt-2" />
@@ -91,7 +90,6 @@ export default function Edit(props){
                         className="mt-1 block w-full"
                         autoComplete="menu_method"
                         handleChange={onHandleChange}
-                        required
                     />
 
                     <InputError message={errors.menu_method} className="mt-2" />
@@ -106,7 +104,6 @@ export default function Edit(props){
                         className="mt-1 block w-full"
                         autoComplete="menu_icon"
                         handleChange={onHandleChange}
-                        required
                     />
 
                     <InputError message={errors.menu_method} className="mt-2" />
@@ -121,7 +118,6 @@ export default function Edit(props){
                         className="mt-1 block w-full"
                         autoComplete="order_by"
                         handleChange={onHandleChange}
-                        required
                     />
 
                     <InputError message={errors.order_by} className="mt-2" />
