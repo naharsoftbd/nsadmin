@@ -29,7 +29,7 @@ class MenuSeeder extends Seeder
             'name' => 'Menus',
             'slug' => 'menus',
             'menu_method' => 'get',
-            'menu_icon' => 'ant-design:mail-filled',
+            'menu_icon' => 'ant-design:menu-outlined',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
             ],
