@@ -104,7 +104,7 @@ export default function Register() {
                         Already registered?
                     </Link>
 
-                    <Button className="ml-4" processing={processing}>
+                    <Button className="ml-4 bg-red-700" processing={processing}>
                         Register
                     </Button>
                 </div>

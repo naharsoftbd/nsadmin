@@ -7,26 +7,26 @@ import { Link } from '@inertiajs/inertia-react';
 import { Head } from '@inertiajs/inertia-react';
 import Sidebar from '@/Layouts/Sidebar';
 
-export default function Authenticated({ auth, header, children, menu }) {
+export default function Authenticated({ auth, header, children, menu, logoUrl }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
-
+    console.log(logoUrl);
     return (
         <div className="min-h-screen bg-gray-100">
-            <nav className="bg-white border-b border-gray-100">
+            <nav className="bg-red-700">
                 <div className="mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-16">
+                    <div className="flex justify-between h-24">
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
                                 <Link href={route('dashboard')}>
-                                    <ApplicationLogo className="block h-9 w-auto text-gray-500" />
+                                    <ApplicationLogo logoUrl={logoUrl} className="block h-9 w-auto text-gray-500" />
                                 </Link>
                             </div>
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            {/*<div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                                   Dashboard
                                 </NavLink>
-                            </div>
+                            </div>*/}
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ml-6">

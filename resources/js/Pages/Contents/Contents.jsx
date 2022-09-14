@@ -7,7 +7,7 @@ import { Inertia } from '@inertiajs/inertia';
 import {TextField,ClearButton} from '@/Components/Style';
 
 export default function Users(props){
-	console.log(props.users);
+	console.log(props.contents.data);
 	const [filterText, setFilterText] = React.useState('');
     const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
     const [selectedRows, setSelectedRows] = React.useState([]);
@@ -17,12 +17,17 @@ export default function Users(props){
     const columns = useMemo( () => [
     {
         name: 'Name',
-        selector: row => row.name,
+        selector: row => row.content_name,
         sortable: true,
     },
     {
-        name: 'Email',
-        selector: row => row.email,
+        name: 'Description',
+        selector: row => row.content_description,
+        sortable: true,
+    },
+    {
+        name: 'Content Type',
+        selector: row => row.content_type,
         sortable: true,
     },
     {
@@ -33,11 +38,6 @@ export default function Users(props){
     {
         name: 'Updated At',
         selector: row => row.updated_at,
-        sortable: true,
-    },
-    {
-        name: 'Verified At',
-        selector: row => row.email_verified_at,
         sortable: true,
     },
     {     
@@ -66,8 +66,8 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
  );
 
     
-    let filteredItems = props.users.filter(
-        item => item.name && item.name.toLowerCase().includes(filterText.toLowerCase()),
+    let filteredItems = props.contents.data.filter(
+        item => item.content_name && item.content_name.toLowerCase().includes(filterText.toLowerCase()),
     );
 
     const subHeaderComponentMemo = React.useMemo(() => {
@@ -91,11 +91,11 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
     const contextActions = React.useMemo(() => {
         const handleDelete = () => {
             
-            if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.email)}?`)) {
+            if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.content_name)}?`)) {
                 setToggleCleared(!toggleCleared);
-                //.log(r.id);
+                console.log(r.id);
                 selectedRows.map((row) => Inertia.visit(route('users.delete',row.id), { method: 'delete' }));
-                setFilteredData(differenceBy(filteredItems, selectedRows, 'email'));
+                setFilteredData(differenceBy(filteredItems, selectedRows, 'content_name'));
             }
         };
 
@@ -110,7 +110,7 @@ const handleEditButtonClick = (url) => {
      url ? Inertia.visit(url, { method: 'get' }):null;
  };
 
- const rowDisabledCriteria = row => row.edit_url == null;
+ const rowDisabledCriteria = row => row.content_name == null;
 
 	return (
 		 <Authenticated
@@ -121,7 +121,7 @@ const handleEditButtonClick = (url) => {
         >
         	<div className="container mx-4 mt-12">
                     <DataTable
-                         title="Users List"
+                         title="Contents List"
                          columns={columns}
                          data={(filteredData.length || toggleCleared) ? filteredData:filteredItems}
                          pagination

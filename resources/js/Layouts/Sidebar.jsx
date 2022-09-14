@@ -8,13 +8,12 @@ import ListItem from './Menu/ListItem';
 
 export default function Sidebar({auth, menus}) {
 
-  const mainMenuM = menus.map((menu) => {
-            console.log(menu?.roles[0]?.id);
-            return ( menu?.roles[0]?.id ? <ListItem title={menu.name} parentslug={menu.slug} menu_method={menu.menu_method} childs={menu.childmenus} faicon={menu.menu_icon} />:null);
+  const mainMenuM = menus.map((menu,index) => {
+            return ( menu?.roles[0]?.id ? <ListItem key={index} title={menu.name} parentslug={menu.slug} menu_method={menu.menu_method} childs={menu.childmenus} faicon={menu.menu_icon} />:null);
     });      
     return (
-        <div className="flex">
-            <div className="flex flex-col h-screen p-3 bg-gray-800 shadow w-60">
+        <div className="flex bg-red-700">
+            <div className="flex flex-col h-screen p-3 shadow w-60">
                 <div className="space-y-3">
                     <div className="flex items-center">
                         <h2 className="text-xl font-bold text-white">Dashboard</h2>

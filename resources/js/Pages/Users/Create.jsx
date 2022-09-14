@@ -44,11 +44,12 @@ export default function Create(props){
             auth={props.auth}
             errors={props.errors}
             menu={props.menu}
+            logoUrl={props.logoUrl}
         >
         	<div className="container mx-4 mt-12">
                     <Head title="Create User" />
 
-            <form onSubmit={submit}>
+            <form onSubmit={submit} enctype="multipart/form-data">
                 <div>
                     <Label forInput="name" value="Name" />
 

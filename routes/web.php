@@ -26,6 +26,7 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
         'canResetPassword' => Route::has('password.request'),
+        'logoUrl' => asset('images/logo.png')
       ]);
     }
     

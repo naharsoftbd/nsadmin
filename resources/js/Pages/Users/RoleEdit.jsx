@@ -39,6 +39,7 @@ export default function RoleEdit(props){
             auth={props.auth}
             errors={props.errors}
             menu={props.menu}
+            logoUrl={props.logoUrl}
         >
         	<div className="container mx-4 mt-12">
                     <Head title="Edit Role" />
@@ -89,7 +90,7 @@ export default function RoleEdit(props){
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
-                    <Button className="ml-4" processing={processing}>
+                    <Button className="ml-4 bg-red-700" processing={processing}>
                         Save
                     </Button>
                 </div>

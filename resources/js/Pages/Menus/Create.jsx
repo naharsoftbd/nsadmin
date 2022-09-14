@@ -7,12 +7,14 @@ import InputError from '@/Components/InputError';
 import Label from '@/Components/Label';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
 import Select from '@/Components/Select';
+import SelectMenu from '@/Components/SelectMenu';
 
 export default function Create(props){
 	const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         slug: '',
-        role:''
+        role:'',
+        parent_menu:''
     });
 
     useEffect(() => {
@@ -42,6 +44,7 @@ export default function Create(props){
             auth={props.auth}
             errors={props.errors}
             menu={props.menu}
+            logoUrl={props.logoUrl}
         >
         	<div className="container mx-4 mt-12">
                     <Head title="Create Menu" />
@@ -124,8 +127,15 @@ export default function Create(props){
 
                     <InputError message={errors.menu_icon} className="mt-2" />
                 </div>
+
                 <div className="mt-4">
-                    <Select id="user_role" name="role" onChange={onSelectHandleChange} className="test" options={props.roles} placeholder="Role" required="required" value={data.role} />
+                    <Label forInput="menu_icon" value="Parent Menu" />
+                    <SelectMenu id="parent_menu" name="parent_menu" onChange={onSelectHandleChange} className="test" options={props.menus} placeholder="Select Menu" required="required" value={data.parent_menu} />
+                </div>
+
+                <div className="mt-4">
+                    <Label forInput="menu_icon" value="Role" />
+                    <Select id="user_role" name="role" onChange={onSelectHandleChange} className="test" options={props.roles} placeholder="Select Role" required="required" value={data.role} />
                 </div>
 
                 <div className="flex items-center justify-end mt-4">

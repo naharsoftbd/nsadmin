@@ -13,6 +13,7 @@ use URL;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Menu;
+use App\Models\ChildMenu;
 
 class MenuController extends Controller
 {
@@ -26,7 +27,7 @@ class MenuController extends Controller
     
         if(Auth::user()->can(['edit']) || Auth::user()->can(['read'])){
 
-            $menus = Menu::all()->map(function ($menu) {
+            $menus = Menu::orderBy('order_by','ASC')->get()->map(function ($menu) {
                 return [
                     'id' => $menu->id,
                     'name' => $menu->name,
@@ -67,8 +68,12 @@ class MenuController extends Controller
                     'label' => $role->name
                 ];
             });
+
+            $menus = Menu::orderBy('order_by','ASC')->get();
+
             return Inertia::render('Menus/Create', [
                 'roles' => $roles,
+                'menus' => $menus,
                 'status' => session('status'),
             ]);
 
@@ -92,16 +97,32 @@ class MenuController extends Controller
             'slug' => 'required|string|max:255',
         ]);
 
-        $menu = Menu::create([
+        if($request->parent_menu){
+
+            $menu = ChildMenu::create([
+            'name' => $request->name,
+            'slug' => $request->slug,
+            'order_by' => $request->order_by,
+            'menu_method' => $request->menu_method,
+            'menu_icon' => $request->menu_icon,
+            'menu_id' => $request->parent_menu
+            ]);
+
+        }else{
+
+            $menu = Menu::create([
             'name' => $request->name,
             'slug' => $request->slug,
             'order_by' => $request->order_by,
             'menu_method' => $request->menu_method,
             'menu_icon' => $request->menu_icon
-        ]);
+            ]);
 
-        $role = Role::find($request->role);
-        $menu->roles()->attach($role);
+            $role = Role::find($request->role);
+            $menu->roles()->attach($role);
+
+        }        
+
         event(new Registered($menu));
 
         return redirect()->intended('/dashboard');
@@ -137,10 +158,13 @@ class MenuController extends Controller
 
             $editmenu = Menu::find($id);
 
+            $menus = Menu::orderBy('order_by','ASC')->get();
+
             return Inertia::render('Menus/Edit', [
                 'roles' => $roles,
                 'editmenu' => $editmenu,
                 'role' => $editmenu->roles->first() ? $editmenu->roles->first()->id:0,
+                'menus' => $menus,
                 'status' => session('status'),
             ]);
 

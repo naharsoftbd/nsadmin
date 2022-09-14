@@ -7,6 +7,7 @@ import InputError from '@/Components/InputError';
 import Label from '@/Components/Label';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
 import Select from '@/Components/Select';
+import SelectMenu from '@/Components/SelectMenu';
 
 export default function Edit(props){
 
@@ -44,6 +45,7 @@ export default function Edit(props){
             auth={props.auth}
             errors={props.errors}
             menu={props.menu}
+            logoUrl={props.logoUrl}
         >
         	<div className="container mx-4 mt-12">
                     <Head title="Create Menu" />
@@ -122,12 +124,18 @@ export default function Edit(props){
 
                     <InputError message={errors.order_by} className="mt-2" />
                 </div>
+
+                <div className="mt-4">
+                    <Label forInput="menu_icon" value="Parent Menu" />
+                    <SelectMenu id="parent_menu" name="parent_menu" onChange={onSelectHandleChange} className="test" options={props.menus} placeholder="Select Menu" required="required" value={data.menu_id} />
+                </div>
+
                 <div className="mt-4">
                     <Select id="user_role" name="role" onChange={onSelectHandleChange} className="test" options={props.roles} placeholder="Role" required="required" value={data.role} />
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
-                    <Button className="ml-4" processing={processing}>
+                    <Button className="ml-4 bg-red-700" processing={processing}>
                         Save
                     </Button>
                 </div>

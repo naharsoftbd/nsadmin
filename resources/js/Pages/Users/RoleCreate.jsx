@@ -51,6 +51,7 @@ export default function RoleCreate(props){
             auth={props.auth}
             errors={props.errors}
             menu={props.menu}
+            logoUrl={props.logoUrl}
         >
         	<div className="container mx-4 mt-12">
                     <Head title="Create Role" />

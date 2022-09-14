@@ -7,7 +7,9 @@ import InputError from '@/Components/InputError';
 import Label from '@/Components/Label';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
 
-export default function Login({ status, canResetPassword, canRegister }) {
+export default function Login({ status, canResetPassword, canRegister, logoUrl }) {
+    console.log(logoUrl);
+
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
@@ -31,14 +33,14 @@ export default function Login({ status, canResetPassword, canRegister }) {
     };
 
     return (
-        <Guest>
+        <Guest logoUrl={logoUrl} >
             <Head title="Log in" />
 
             {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
 
             <form onSubmit={submit}>
                 <div>
-                    <Label forInput="email" value="Email" />
+                    <Label forInput="email" value="Email" className="text-white"/>
 
                     <Input
                         type="text"
@@ -54,7 +56,7 @@ export default function Login({ status, canResetPassword, canRegister }) {
                 </div>
 
                 <div className="mt-4">
-                    <Label forInput="password" value="Password" />
+                    <Label forInput="password" value="Password" className="text-white"/>
 
                     <Input
                         type="password"
@@ -72,7 +74,7 @@ export default function Login({ status, canResetPassword, canRegister }) {
                     <label className="flex items-center">
                         <Checkbox name="remember" value={data.remember} handleChange={onHandleChange} />
 
-                        <span className="ml-2 text-sm text-gray-600">Remember me</span>
+                        <span className="ml-2 text-sm text-white">Remember me</span>
                     </label>
                 </div>
 
@@ -80,7 +82,7 @@ export default function Login({ status, canResetPassword, canRegister }) {
                     {canRegister && (
                         <Link
                                 href={route('register')}
-                                className="mr-4 text-sm text-gray-700 dark:text-gray-500 underline"
+                                className="mr-4 text-sm text-white dark:text-white underline"
                             >
                                 Register
                         </Link>
@@ -88,13 +90,13 @@ export default function Login({ status, canResetPassword, canRegister }) {
                     {canResetPassword && (
                         <Link
                             href={route('password.request')}
-                            className="underline text-sm text-gray-600 hover:text-gray-900"
+                            className="underline text-sm text-white hover:text-white"
                         >
                             Forgot your password?
                         </Link>
                     )}
 
-                    <Button className="ml-4" processing={processing}>
+                    <Button className="ml-4 bg-red-700" processing={processing}>
                         Log in
                     </Button>
                 </div>

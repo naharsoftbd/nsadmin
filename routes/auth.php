@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Users\UserController;
 use App\Http\Controllers\Users\RoleController;
 use App\Http\Controllers\Menu\MenuController;
+use App\Http\Controllers\Contents\ContentController;
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -80,4 +81,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/menus/{id}/edit',[MenuController::class,'edit'])->name('menus.edit');
     Route::post('/menus/{id}',[MenuController::class,'update'])->name('menus.update');
     Route::delete('/menus/{id}/delete',[MenuController::class,'destroy'])->name('menus.delete');
+
+    Route::get('/contents',[ContentController::class,'index'])->name('contents.index');
+    Route::get('/contents/create/{id?}',[ContentController::class,'create'])->name('contents.create');
+    Route::post('/contents/create',[ContentController::class,'store']);
+    Route::get('/contents/{id}/edit',[ContentController::class,'edit'])->name('contents.edit');
 });
