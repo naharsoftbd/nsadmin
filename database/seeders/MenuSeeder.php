@@ -29,7 +29,7 @@ class MenuSeeder extends Seeder
             'name' => 'Menus',
             'slug' => 'menus',
             'menu_method' => 'get',
-            'menu_icon' => 'ant-design:mail-filled',
+            'menu_icon' => 'ant-design:menu-outlined',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
             ],
@@ -129,6 +129,37 @@ class MenuSeeder extends Seeder
             'menu_id' => 4,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
+            ]
+        ]);
+
+        DB::table('menu_role')->insert([
+            [
+                'menu_id' => 1,
+                'role_id' => 1
+            ],
+            [
+                'menu_id' => 2,
+                'role_id' => 1
+            ],
+            [
+                'menu_id' => 3,
+                'role_id' => 1
+            ],
+            [
+                'menu_id' => 4,
+                'role_id' => 1
+            ],
+            [
+                'menu_id' => 5,
+                'role_id' => 1
+            ],
+            [
+                'menu_id' => 6,
+                'role_id' => 1
+            ],
+            [
+                'menu_id' => 7,
+                'role_id' => 1
             ]
         ]);
     }

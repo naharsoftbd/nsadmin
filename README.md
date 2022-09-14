@@ -6,6 +6,27 @@ NSAdmin template is a web application dashboard templage with laravel and React 
 
 NSAdmin template is accessible, powerful, and provides tools required for large, robust applications.
 
+## Installation Process
+
+ git clone https://github.com/naharsoftbd/nsadmin.git
+
+ cd nsadmin
+
+ composer install
+
+ npm install
+
+ php artisan migrate
+
+ npm run dev
+
+ then in url after slash write /admin-install if installation success it should login automatically
+
+ user: demo@demo.com
+ pass:demopassword
+
+
+
 ## License
 
 This template is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
