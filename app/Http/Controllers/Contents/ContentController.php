@@ -129,8 +129,6 @@ class ContentController extends Controller
             $stb_thumbnail = $request->file('stb_thumbnail')->store('images/contents/stb_thumbnail', 'public');
         }
 
-        //dd($request->content_expire_time);
-
         $content = Content::create([
             'content_name' => $request->content_name,
             'content_description' => $request->content_description,
