@@ -6,7 +6,7 @@ import differenceBy from 'lodash/differenceBy';
 import { Inertia } from '@inertiajs/inertia';
 import {TextField,ClearButton} from '@/Components/Style';
 
-export default function Users(props){
+export default function Contents(props){
 	console.log(props.contents.data);
 	const [filterText, setFilterText] = React.useState('');
     const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);

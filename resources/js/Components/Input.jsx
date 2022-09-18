@@ -7,6 +7,7 @@ export default function Input({
     className,
     autoComplete,
     required,
+    readOnly,
     isFocused,
     handleChange,
 }) {
@@ -31,6 +32,7 @@ export default function Input({
                 ref={input}
                 autoComplete={autoComplete}
                 required={required}
+                readOnly={readOnly}
                 onChange={(e) => handleChange(e)}
             />
         </div>

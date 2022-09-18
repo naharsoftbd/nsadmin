@@ -30,11 +30,28 @@ export default function Create(props){
         mobile_thumbnail:null,
         web_logo:null,
         web_thumbnail:null,
+        stb_logo:null,
+        stb_thumbnail:null,
         category:props?.category_id,
+        category_name:'',
         sub_category:'',
+        sub_category_name:'',
+        is_premium:false,
+        is_purchased:false,
+        is_trailer_available:false,
+        trailer_url:'',
+        age_restriction:false,
+        orientation:'',
+        content_file_name:'',
+        content_aes_128_hls_url:'',
+        content_drm_dash_url:'',
+        content_drm_hls_url:'',
+        share_url:'',
         content_expire_time:new Date(),
         content_publish_time:new Date()
     });
+
+    console.log(data.is_trailer_available);
 
     useEffect(() => {
         return () => {
@@ -58,12 +75,10 @@ export default function Create(props){
     };
 
     const onSelectCategoryChange = (e) => {
-        setData({ ...data, [e.target.name]: e.target.value });
-        // Inertia.visit(route('contents.create',[e.target.value]), {
-        // method: 'get',
-        // data: {}
-        // });
-        console.log(parseInt(e.target.value));
+        let index = e.nativeEvent.target.selectedIndex;
+        let label = e.nativeEvent.target[index].text;
+        let narray = [{'category':e.target.value,'category_name':label}];
+        setData({ ...data, ...narray[0]});
         if(!isNaN(parseInt(e.target.value))){
         let subCat = props.categories.filter((category)=> {if(category.id==e.target.value){ return category.id; }})[0].sub_categories;
             setSubCategories(subCat);
@@ -73,8 +88,17 @@ export default function Create(props){
 
     };
 
+    const onSelectSubCategoryChange = (e) => {
+        //setData({ ...data, [e.target.name]: e.target.value });
+        let index = e.nativeEvent.target.selectedIndex;
+        let label = e.nativeEvent.target[index].text;
+        let snarray = [{[e.target.name]:e.target.value,'sub_category_name':label}];
+        setData({ ...data, ...snarray[0]});
+    };
+
     const contentType = [{value:1,label:'VOD'},{ value:2, label:'Live'}];
-    
+    const orientation = [{value:1,label:'Undefined'},{ value:2, label:'Vertical'},{ value:3, label:'Horizontal'}];
+
 	return (
 		 <Authenticated
             auth={props.auth}
@@ -137,7 +161,7 @@ export default function Create(props){
                     <Label forInput="content_type" value="Content Type" />
                     <Select id="content_type" name="content_type" onChange={onSelectHandleChange} className="test" options={contentType} placeholder="Select Content Type" required="required" value={data.content_type} />
                 </div>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-2 gap-4">
                 <div className="col-span-1 mt-4">
                     <label className="flex items-center">
                         <Checkbox name="is_active" value={data.is_active} handleChange={onHandleChange} />
@@ -163,7 +187,9 @@ export default function Create(props){
                 </div>
                 </div>
 
-                <div className="mt-4">
+                <fieldset className="border border-solid border-gray-300 p-3 mt-4">
+                    <legend>Images</legend>
+                 <div className="mt-0">
                     <Label forInput="feature_banner" value="Featre Banner" />
 
                     <input type="file" name="feature_banner" value={''} onChange={e => setData('feature_banner', e.target?.files[0])} />
@@ -220,6 +246,7 @@ export default function Create(props){
                     <InputError message={errors.stb_thumbnail} className="mt-2" />
                 </div>
                 </div>
+                </fieldset>
 
                 <div className="mt-4">
                     <Label forInput="share_url" value="Share Url" />
@@ -235,7 +262,7 @@ export default function Create(props){
                         required
                     />
 
-                    <InputError message={errors.content_type} className="mt-2" />
+                    <InputError message={errors.share_url} className="mt-2" />
 
                 </div>
 
@@ -255,33 +282,153 @@ export default function Create(props){
                         </label>
                     </div>
 
+                    <div className="col-span-1 mt-4">
+                        <label className="flex items-center">
+                            <Checkbox name="is_trailer_available" value={data.is_trailer_available} handleChange={onHandleChange} />
+                            <span className="ml-2 text-sm text-gray-600">Is Trailer Available</span>
+                        </label>
+                    </div>
+
+                    <div className="col-span-1 mt-4">
+                        <label className="flex items-center">
+                            <Checkbox name="age_restriction" value={data.age_restriction} handleChange={onHandleChange} />
+                            <span className="ml-2 text-sm text-gray-600">Age Restriction</span>
+                        </label>
+                    </div>
                 </div>
 
-                <div className="mt-4">
-                    <Label forInput="content_expire_time" value="Content Expire Time" />
-                    <DateTimePicker onChange={e => setData('content_expire_time',e) } value={data.content_expire_time} name='content_expire_time' format="y-MM-dd h:mm:ss a" className='bg-white' />
-                </div>
+               { data.is_trailer_available && <div className="mt-4">
+                    <Label forInput="trailer_url" value="Trailer Url" />
+
+                    <Input
+                        type="text"
+                        name="trailer_url"
+                        value={data.trailer_url}
+                        className="mt-1 block w-full"
+                        autoComplete="trailer_url"
+                        isFocused={true}
+                        handleChange={onHandleChange}
+                        required
+                    />
+
+                    <InputError message={errors.trailer_url} className="mt-2" />
+
+                 </div>
+                }
+
+                <fieldset className="border border-solid border-gray-300 p-3 mt-4 grid grid-cols-2 gap-4">
+                    <legend>Date and Time</legend>
+                    <div className="col-span-1 mt-0">
+                        <Label forInput="content_expire_time" value="Content Expire Time" />
+                        <DateTimePicker onChange={e => setData('content_expire_time',e) } value={data.content_expire_time} name='content_expire_time' format="y-MM-dd h:mm:ss a" className='bg-white' />
+                    </div>
+
+                    <div className="col-span-1 mt-0">
+                        <Label forInput="content_publish_time" value="Content Publish Time" />
+                        <DateTimePicker onChange={e => setData('content_publish_time',e) } value={data.content_publish_time} name='content_publish_time' format="y-MM-dd h:mm:ss a" className='bg-white' />
+                    </div>
+                </fieldset>
+
+                <fieldset className="border border-solid border-gray-300 p-3 mt-4">
+                    <legend>Categories</legend>
+                 <div className="grid grid-cols-2 gap-4">
+                    <div className="col-span-1 mt-0">
+                        <Label forInput="category" value="Category" />
+                        <SelectCategory id="category" name="category" onChange={onSelectCategoryChange} className="category" options={props.categories} placeholder="Select Category" required="required" value={data.category} />
+                    </div>
+
+                    <div className="col-span-1 mt-0">
+                        <Label forInput="sub_category" value="Sub Category" />
+                        <SelectSubCategory id="sub_category" name="sub_category" onChange={onSelectSubCategoryChange} className="sub_category" options={subCategories} placeholder="Select Sub Category" required="required" value={data.sub_category} />
+                    </div>
+                   </div>
+                </fieldset>
 
                 <div className="mt-4">
-                    <Label forInput="content_publish_time" value="Content Publish Time" />
-                    <DateTimePicker onChange={e => setData('content_publish_time',e) } value={data.content_publish_time} name='content_publish_time' format="y-MM-dd h:mm:ss a" className='bg-white' />
+                    <Label forInput="orientation" value="Orientation" />
+                    <Select id="orientation" name="orientation" onChange={onSelectHandleChange} className="test" options={orientation} placeholder="Select Orientation" required="required" value={data.orientation} />
                 </div>
-                
                 <div className="mt-4">
-                    <Label forInput="category" value="Category" />
-                    <SelectCategory id="category" name="category" onChange={onSelectCategoryChange} className="category" options={props.categories} placeholder="Select Category" required="required" value={data.category} />
-                </div>
+                    <fieldset className="border border-solid border-gray-300 p-3 mt-4">
+                        <legend>Content Details</legend>
+                        <div className="mt-0">
+                            <Label forInput="content_file_name" value="Content File Name" />
 
-                <div className="mt-4">
-                    <Label forInput="sub_category" value="Sub Category" />
-                    <SelectSubCategory id="sub_category" name="sub_category" onChange={onSelectHandleChange} className="sub_category" options={subCategories} placeholder="Select Sub Category" required="required" value={data.sub_category} />
+                            <Input
+                                type="text"
+                                name="content_file_name"
+                                value={data.content_file_name}
+                                className="mt-1 block w-full"
+                                autoComplete="content_file_name"
+                                isFocused={true}
+                                handleChange={onHandleChange}
+                                required
+                            />
+
+                            <InputError message={errors.content_file_name} className="mt-2" />
+
+                        </div>
+
+                        <div className="mt-4">
+                            <Label forInput="content_aes_128_hls_url" value="Content Aes 128 HLS Url" />
+
+                            <Input
+                                type="text"
+                                name="content_aes_128_hls_url"
+                                value={data.content_aes_128_hls_url}
+                                className="mt-1 block w-full"
+                                autoComplete="content_aes_128_hls_url"
+                                isFocused={true}
+                                handleChange={onHandleChange}
+                                required
+                            />
+
+                            <InputError message={errors.content_aes_128_hls_url} className="mt-2" />
+
+                        </div>
+                        <div className="mt-4">
+                            <Label forInput="content_drm_dash_url" value="Content DRM Dash Url" />
+
+                            <Input
+                                type="text"
+                                name="content_drm_dash_url"
+                                value={data.content_drm_dash_url}
+                                className="mt-1 block w-full"
+                                autoComplete="content_drm_dash_url"
+                                isFocused={true}
+                                handleChange={onHandleChange}
+                                required
+                            />
+
+                            <InputError message={errors.content_drm_dash_url} className="mt-2" />
+
+                        </div>
+                        <div className="mt-4">
+                            <Label forInput="content_drm_hls_url" value="Content DRM HLS Url" />
+
+                            <Input
+                                type="text"
+                                name="content_drm_hls_url"
+                                value={data.content_drm_hls_url}
+                                className="mt-1 block w-full"
+                                autoComplete="content_drm_hls_url"
+                                isFocused={true}
+                                handleChange={onHandleChange}
+                                required
+                            />
+
+                            <InputError message={errors.content_drm_hls_url} className="mt-2" />
+
+                        </div>
+                    </fieldset>
                 </div>
 
                 <div className="mt-4">
                     <Label forInput="user_role" value="Role" />
                     <Select id="user_role" name="role" onChange={onSelectHandleChange} className="test" options={props.roles} placeholder="Select Role" required="required" value={data.role} />
                 </div>
-
+                
+                
                 {progress && (
                   <progress className="w-full h-2" value={progress.percentage} max="100">
                     {progress.percentage}%
