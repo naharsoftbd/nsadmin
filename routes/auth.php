@@ -86,4 +86,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/contents/create/{id?}',[ContentController::class,'create'])->name('contents.create');
     Route::post('/contents/create',[ContentController::class,'store']);
     Route::get('/contents/{id}/edit',[ContentController::class,'edit'])->name('contents.edit');
+    Route::post('/contents/{id}',[ContentController::class,'update'])->name('contents.update');
+    Route::delete('/contents/{id}/delete',[ContentController::class,'destroy'])->name('contents.delete');
 });

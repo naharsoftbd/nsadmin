@@ -13,6 +13,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\SubCategory;
+use Carbon\Carbon;
 
 class ContentController extends Controller
 {
@@ -147,8 +148,14 @@ class ContentController extends Controller
             'category_id' => $request->category,
             'sub_category_id' => $request->sub_category,
             'content_expire_time' => date('Y-m-d H:i:s', strtotime($request->content_expire_time)),
-            'content_publish_time' => date('Y-m-d H:i:s', strtotime($request->content_publish_time))
+            'content_publish_time' => date('Y-m-d H:i:s', strtotime($request->content_publish_time)),
+            'is_premium' => $request->is_premium,
+            'is_purchased' => $request->is_purchased
         ]);
+
+        $lastid = $content->id;
+        $content->content_dir = md5($lastid.Carbon::now());
+        $content->save();
 
         event(new Registered($content));
 
@@ -217,6 +224,7 @@ class ContentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $content = Content::find($id)->delete();
+        return redirect('contents'); 
     }
 }

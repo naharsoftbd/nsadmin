@@ -10,8 +10,10 @@ import {
   Legend,
   ArcElement,
   PointElement,
+  LineElement,
 } from 'chart.js';
-import { Bar, Pie, Doughnut, Chart } from 'react-chartjs-2';
+import { Bar, Pie, Doughnut, Chart, Line } from 'react-chartjs-2';
+import { faker } from '@faker-js/faker';
 
 ChartJS.register(
   CategoryScale,
@@ -21,8 +23,22 @@ ChartJS.register(
   Tooltip,
   Legend,
   ArcElement,
-  PointElement
+  PointElement,
+  LineElement
 );
+
+export const loptions = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top',
+    },
+    title: {
+      display: true,
+      text: 'Chart.js Line Chart',
+    },
+  },
+};
 
 export const options = {
   plugins: {
@@ -51,7 +67,7 @@ export const goptions = {
   },
   responsive: true,
   interaction: {
-    //mode: 'index' as const,
+    mode: 'index',
     intersect: false
   },
   scales: {
@@ -99,12 +115,12 @@ export const data = {
   datasets: [
     {
       label: 'Dataset 1',
-      data: labels.map(() => array),
+      data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
       backgroundColor: 'rgba(255, 99, 132, 0.5)',
     },
     {
       label: 'Dataset 2',
-      data: labels.map(() => array),
+      data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
       backgroundColor: 'rgba(53, 162, 235, 0.5)',
     },
   ],
@@ -137,6 +153,24 @@ export const doughnut = {
   ],
 };
 
+
+export const ldata = {
+  labels,
+  datasets: [
+    {
+      label: 'Dataset 1',
+      data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+      borderColor: 'rgb(255, 99, 132)',
+      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+    },
+    {
+      label: 'Dataset 2',
+      data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+      borderColor: 'rgb(53, 162, 235)',
+      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+    },
+  ],
+};
 
 
 export default function Dashboard(props) {
@@ -184,7 +218,7 @@ export default function Dashboard(props) {
                 </div>
                 <div className="grid grid-cols-1 gap-6 mb-6 lg:grid-cols-3">
                     <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
-                        <Bar options={options} data={data} />
+                        <Line options={loptions} data={ldata} />
                     </div>
                     <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
                         <Bar options={goptions} data={data} />
