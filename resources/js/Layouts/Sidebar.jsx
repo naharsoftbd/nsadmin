@@ -9,11 +9,12 @@ import ListItem from './Menu/ListItem';
 export default function Sidebar({auth, menus}) {
 
   const mainMenuM = menus.map((menu,index) => {
-            return ( menu?.roles[0]?.id ? <ListItem key={index} title={menu.name} parentslug={menu.slug} menu_method={menu.menu_method} childs={menu.childmenus} faicon={menu.menu_icon} />:null);
+    
+            return ( (menu?.roles[0]?.id == auth?.role?.id || menu?.roles[1]?.id == auth?.role?.id || menu?.roles[2]?.id == auth?.role?.id) ? <ListItem key={index} title={menu.name} parentslug={menu.slug} menu_method={menu.menu_method} childs={menu.childmenus} faicon={menu.menu_icon} menu_id={menu.id}/>:null);
     });      
     return (
-        <div className="flex bg-red-700">
-            <div className="flex flex-col h-screen p-3 shadow w-60">
+        <div className="flex bg-black">
+            <div className="flex flex-col h-screen p-3 w-60">
                 <div className="space-y-3">
                     <div className="flex items-center">
                         <h2 className="text-xl font-bold text-white">Dashboard</h2>
