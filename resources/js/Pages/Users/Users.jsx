@@ -3,7 +3,7 @@ import Authenticated from '@/Layouts/Authenticated';
 import DataTable from 'react-data-table-component';
 import styled from 'styled-components';
 import differenceBy from 'lodash/differenceBy';
-import { Inertia } from '@inertiajs/inertia';
+import { router } from '@inertiajs/react';
 import {TextField,ClearButton} from '@/Components/Style';
 
 export default function Users(props){
@@ -94,7 +94,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
             if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.email)}?`)) {
                 setToggleCleared(!toggleCleared);
                 //.log(r.id);
-                selectedRows.map((row) => Inertia.visit(route('users.delete',row.id), { method: 'delete' }));
+                selectedRows.map((row) => router.visit(route('users.delete',row.id), { method: 'delete' }));
                 setFilteredData(differenceBy(filteredItems, selectedRows, 'email'));
             }
         };
@@ -107,7 +107,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
     }, [filteredItems, selectedRows, toggleCleared]);
 
 const handleEditButtonClick = (url) => {
-     url ? Inertia.visit(url, { method: 'get' }):null;
+     url ? router.visit(url, { method: 'get' }):null;
  };
 
  const rowDisabledCriteria = row => row.edit_url == null;

@@ -2,7 +2,7 @@ import React, { useState }  from "react";
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link } from '@inertiajs/inertia-react';
+import { Link } from '@inertiajs/react';
 import { Icon } from '@iconify/react';
 import ListItem from './Menu/ListItem';
 

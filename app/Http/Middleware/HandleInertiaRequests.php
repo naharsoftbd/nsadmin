@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
 use App\Models\Menu;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -15,6 +17,8 @@ class HandleInertiaRequests extends Middleware
      * @var string
      */
     protected $rootView = 'app';
+    protected $menus = '';
+    protected $token = '';
 
     /**
      * Determine the current asset version.
@@ -35,12 +39,30 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
-        $menus = Menu::with(['childmenus','roles'])->orderBy('order_by','ASC')->get();
+        if(Auth::check()){
+        $this->menus = Menu::with(['childmenus','roles'])->orderBy('order_by','ASC')->get()->map(function ($format) {
+                    return [
+                        'id' => $format->id,
+                        'name' => $format->name,
+                        'slug' => $format->slug,
+                        'order_by' => $format->order_by,
+                        'menu_method' => $format->menu_method,
+                        'menu_icon' => $format->menu_icon,
+                        'childmenus' => $format->getChildMenus(),
+                        'roles' => $format->roles
+                    ];
+                });
+
+            $user = User::where('email', Auth::user()->email)->first();
+            $this->token = $user->tokens()->get()->pluck('token');
+        }
+
+        
         
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
-                'is_admin' => $request->user() ? $request->user()->hasRole('admin'):null,
+                'is_admin' => $request->user() ? ($request->user()->hasRole('admin') || $request->user()->hasRole('supper_admin')):null,
                 'role' => $request->user() ? $request->user()->roles()->get()->first():null,
             ],
             'ziggy' => function () use ($request) {
@@ -49,8 +71,16 @@ class HandleInertiaRequests extends Middleware
                     'query'=> $request->query()
                 ]);
             },
-            'menu' => $menus,
-            'logoUrl' => asset('images/logo.png')
+            'menu' => $this->menus,
+            'logoUrl' => asset('images/logo.png'),
+            'imageUrl' => '',
+            'flash' => function () use ($request) {
+                return [
+                    'success' => $request->session()->get('success'),
+                    'error' => $request->session()->get('error'),
+                ];
+            },
+            'token' => $this->token
         ]);
     }
 }

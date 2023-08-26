@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect }  from "react";
 import { Icon } from '@iconify/react';
-import { Link } from '@inertiajs/inertia-react';
-import { Inertia } from '@inertiajs/inertia';
+import { Link } from '@inertiajs/react';
+import { router } from '@inertiajs/react';
 
 export default function ListItem({title, parentslug, menu_method, childs, faicon, menu_id}) {
   const [show, setShow] = React.useState(false);
@@ -32,7 +32,7 @@ export default function ListItem({title, parentslug, menu_method, childs, faicon
 }
 return (
   <li className="rounded-sm">
-  <button className="flex items-center p-2 space-x-3 rounded-md" onClick={() =>{ (parent_id==menu_id) ? localStorage.removeItem("parent_id"):localStorage.setItem("parent_id", menu_id); Inertia.reload(); parentslug ? Inertia.visit(route(parentslug), { method: menu_method }):null;}}>
+  <button className="flex items-center p-2 space-x-3 rounded-md" onClick={() =>{ (parent_id==menu_id) ? localStorage.removeItem("parent_id"):localStorage.setItem("parent_id", menu_id); router.reload(); parentslug ? router.visit(route(parentslug), { method: menu_method }):null;}}>
   <Icon className="text-white" icon={faicon} />
   <span className="text-gray-100">{title}</span>
   </button>

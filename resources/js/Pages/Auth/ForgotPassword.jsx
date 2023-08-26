@@ -3,7 +3,7 @@ import Button from '@/Components/Button';
 import Guest from '@/Layouts/Guest';
 import Input from '@/Components/Input';
 import InputError from '@/Components/InputError';
-import { Head, useForm } from '@inertiajs/inertia-react';
+import { Head, useForm } from '@inertiajs/react';
 
 export default function ForgotPassword({ status }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -24,7 +24,7 @@ export default function ForgotPassword({ status }) {
         <Guest>
             <Head title="Forgot Password" />
 
-            <div className="mb-4 text-sm text-gray-500 leading-normal">
+            <div className="mb-4 text-sm text-white leading-normal">
                 Forgot your password? No problem. Just let us know your email address and we will email you a password
                 reset link that will allow you to choose a new one.
             </div>

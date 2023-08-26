@@ -1,6 +1,6 @@
 import React from 'react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
-import { Link } from '@inertiajs/inertia-react';
+import { Link } from '@inertiajs/react';
 
 export default function Guest({ logoUrl, children }) {
     return (
@@ -11,7 +11,7 @@ export default function Guest({ logoUrl, children }) {
                 </Link>
             </div>
 
-            <div className="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg bg-red-600">
+            <div className="w-full sm:max-w-md mt-6 px-6 py-4 shadow-md overflow-hidden sm:rounded-lg bg-red-600">
                 <h2 className="w-full text-white items-center justify-center font-extrabold text-3xl text-center">NSBDAdmin</h2>
                 {children}
             </div>

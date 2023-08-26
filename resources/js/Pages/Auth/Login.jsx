@@ -5,7 +5,7 @@ import Guest from '@/Layouts/Guest';
 import Input from '@/Components/Input';
 import InputError from '@/Components/InputError';
 import Label from '@/Components/Label';
-import { Head, Link, useForm } from '@inertiajs/inertia-react';
+import { Head, Link, useForm } from '@inertiajs/react';
 
 export default function Login({ status, canResetPassword, canRegister, logoUrl }) {
     console.log(logoUrl);
@@ -39,6 +39,7 @@ export default function Login({ status, canResetPassword, canRegister, logoUrl }
             {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
 
             <form onSubmit={submit}>
+                <InputError message={errors.failed} className="mt-2 text-white" />
                 <div>
                     <Label forInput="email" value="Email" className="text-white"/>
 
@@ -52,7 +53,7 @@ export default function Login({ status, canResetPassword, canRegister, logoUrl }
                         handleChange={onHandleChange}
                     />
 
-                    <InputError message={errors.email} className="mt-2" />
+                    <InputError message={errors.email} className="mt-2 text-white" />
                 </div>
 
                 <div className="mt-4">
@@ -67,7 +68,7 @@ export default function Login({ status, canResetPassword, canRegister, logoUrl }
                         handleChange={onHandleChange}
                     />
 
-                    <InputError message={errors.password} className="mt-2" />
+                    <InputError message={errors.password} className="mt-2 text-white" />
                 </div>
 
                 <div className="block mt-4">

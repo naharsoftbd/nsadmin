@@ -16,10 +16,12 @@ return new class extends Migration
         Schema::create('menu_role', function (Blueprint $table) {
             $table->unsignedBigInteger('menu_id')->nullable();
             $table->unsignedBigInteger('role_id')->nullable();
+            $table->unsignedBigInteger('child_menu_id')->nullable();
 
            //FOREIGN KEY CONSTRAINTS
            $table->foreign('menu_id')->references('id')->on('menus')->onDelete('cascade');
            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+           $table->foreign('child_menu_id')->references('id')->on('child_menus')->onDelete('cascade');
 
            //SETTING THE PRIMARY KEYS
            $table->primary(['menu_id','role_id']);
