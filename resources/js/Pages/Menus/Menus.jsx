@@ -3,8 +3,9 @@ import Authenticated from '@/Layouts/Authenticated';
 import DataTable from 'react-data-table-component';
 import styled from 'styled-components';
 import differenceBy from 'lodash/differenceBy';
-import { Inertia } from '@inertiajs/inertia';
+import { router } from '@inertiajs/react'
 import {TextField,ClearButton} from '@/Components/Style';
+import ExpandedComponent from '@/Components/ExpandedComponent';
 
 
 export default function Menus(props){
@@ -60,24 +61,6 @@ export default function Menus(props){
 ]);
 
 
-
-const FilterComponent = ({ filterText, onFilter, onClear }) => (
-  <>
-      <TextField
-          id="search"
-          type="text"
-          placeholder="Filter By Name"
-          aria-label="Search Input"
-          value={filterText}
-          onChange={onFilter}
-      />
-      <ClearButton type="button" onClick={onClear}>
-          X
-       </ClearButton>
-  </>
- );
-
-    
     let filteredItems = props.menus.filter(
         item => item.name && item.name.toLowerCase().includes(filterText.toLowerCase()),
     );
@@ -91,7 +74,20 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
         };
 
         return (
-            <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
+            <>
+            <TextField
+          id="search"
+          type="text"
+          placeholder="Filter By Name"
+          aria-label="Search Input"
+          value={filterText}
+          onChange={e => setFilterText(e.target.value)}
+          />
+          <ClearButton type="button" onClick={handleClear}>
+              X
+           </ClearButton>
+         </>
+            //<FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />
         );
     }, [filterText, resetPaginationToggle]);
 
@@ -106,7 +102,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
             if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(r => r.name)}?`)) {
                 setToggleCleared(!toggleCleared);
                 //.log(r.id);
-                selectedRows.map((row) => Inertia.visit(route('menus.delete',row.id), { method: 'delete' }));
+                selectedRows.map((row) => router.visit(route('menus.delete',row.id), { method: 'delete' }));
                 setFilteredData(differenceBy(filteredItems, selectedRows, 'slug'));
             }
         };
@@ -119,10 +115,14 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
     }, [filteredItems, selectedRows, toggleCleared]);
 
     const handleEditButtonClick = (url) => {
-        url ? Inertia.visit(url, { method: 'get' }):null;
+        url ? router.visit(url, { method: 'get' }):null;
     };
 
-    const rowDisabledCriteria = row => row.edit_url == null;
+    const rowDisabledCriteria = row => row.is_admin != true;
+
+    const ExpandedComponents = ({data}) => {
+        return <ExpandedComponent childData={data} />;
+    }
 
 	return (
 		 <Authenticated
@@ -146,6 +146,9 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
                          onSelectedRowsChange={handleRowSelected}
                          clearSelectedRows={toggleCleared}
                          selectableRowDisabled={rowDisabledCriteria}
+                         expandableRows
+                         //expandableRowExpanded={true}
+                         expandableRowsComponent={ExpandedComponents}
                      />
             </div>
         </Authenticated>

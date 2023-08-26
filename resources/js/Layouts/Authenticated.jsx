@@ -3,8 +3,8 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link } from '@inertiajs/inertia-react';
-import { Head } from '@inertiajs/inertia-react';
+import { Link } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import Sidebar from '@/Layouts/Sidebar';
 
 export default function Authenticated({ auth, header, children, menu, logoUrl }) {
@@ -57,6 +57,7 @@ export default function Authenticated({ auth, header, children, menu, logoUrl })
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
+                                        <Dropdown.Link href={route('profile.edit')} method="get">Profile</Dropdown.Link>
                                         <Dropdown.Link href={route('logout')} method="post" as="button">
                                             Log Out
                                         </Dropdown.Link>
@@ -114,7 +115,7 @@ export default function Authenticated({ auth, header, children, menu, logoUrl })
             </nav>
 
             {header && (
-                <header className="bg-white shadow">
+                <header className="bg-red-700 shadow">
                     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
                 </header>
             )}

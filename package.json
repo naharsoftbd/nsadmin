@@ -7,20 +7,18 @@
     "devDependencies": {
         "@headlessui/react": "^1.4.2",
         "@iconify/react": "^3.2.2",
-        "@inertiajs/inertia": "^0.11.0",
-        "@inertiajs/inertia-react": "^0.8.0",
-        "@inertiajs/progress": "^0.2.6",
-        "@tailwindcss/forms": "^0.5.2",
-        "@vitejs/plugin-react": "^2.0.0",
-        "autoprefixer": "^10.4.2",
-        "axios": "^0.27",
-        "laravel-vite-plugin": "^0.6.0",
+        "@inertiajs/react": "^1.0.0",
+        "@tailwindcss/forms": "^0.5.3",
+        "@vitejs/plugin-react": "^4.0.3",
+        "autoprefixer": "^10.4.12",
+        "axios": "^1.1.2",
+        "laravel-vite-plugin": "^0.8.0",
         "lodash": "^4.17.19",
-        "postcss": "^8.4.6",
-        "react": "^17.0.2",
-        "react-dom": "^17.0.2",
-        "tailwindcss": "^3.1.0",
-        "vite": "^3.0.0"
+        "postcss": "^8.4.18",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "tailwindcss": "^3.2.1",
+        "vite": "^4.0.0"
     },
     "dependencies": {
         "@babel/preset-typescript": "^7.18.6",
@@ -38,7 +36,7 @@
         "react-bootstrap": "^2.5.0",
         "react-chartjs-2": "^4.3.1",
         "react-data-table-component": "^7.5.3",
-        "react-datetime-picker": "^4.0.0",
+        "react-datetime-picker": "^5.5.1",
         "react-scripts": "^5.0.1",
         "styled-components": "^5.3.5"
     }

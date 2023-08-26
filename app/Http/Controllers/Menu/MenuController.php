@@ -24,6 +24,7 @@ class MenuController extends Controller
      */
     public function index()
     {
+        //dd(Auth::user()->hasRole('admin'));
     
         if(Auth::user()->can(['edit']) || Auth::user()->can(['read'])){
 
@@ -38,6 +39,8 @@ class MenuController extends Controller
                     'created_at' => $menu->created_at,
                     'updated_at' => $menu->updated_at,
                     'edit_url' => Auth::user()->can('edit') ? URL::route('menus.edit', $menu):null,
+                    'is_admin' => Auth::user()->hasRole('admin'),
+                    'childmenus' => $menu->childmenus,
                 ];
             });
 
@@ -108,6 +111,12 @@ class MenuController extends Controller
             'menu_id' => $request->parent_menu
             ]);
 
+            $mainmenu = Menu::find($request->parent_menu);
+
+            $role = Role::whereIn('id',$request->role)->get()->pluck('id')->toArray();
+            //dd($role);
+            $mainmenu->roles()->attach($role,['child_menu_id' => $menu->id]);
+
         }else{
 
             $menu = Menu::create([
@@ -118,7 +127,7 @@ class MenuController extends Controller
             'menu_icon' => $request->menu_icon
             ]);
 
-            $role = Role::find($request->role);
+            $role = Role::whereIn('id',$request->role)->get()->pluck('id')->toArray();
             $menu->roles()->attach($role);
 
         }        
@@ -159,11 +168,10 @@ class MenuController extends Controller
             $editmenu = Menu::find($id);
 
             $menus = Menu::orderBy('order_by','ASC')->get();
-
             return Inertia::render('Menus/Edit', [
                 'roles' => $roles,
                 'editmenu' => $editmenu,
-                'role' => $editmenu->roles->first() ? $editmenu->roles->first()->id:0,
+                'role' => $editmenu->roles->first() ? $editmenu->roles->pluck('id')->toArray():0,
                 'menus' => $menus,
                 'status' => session('status'),
             ]);
@@ -185,7 +193,7 @@ class MenuController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255',
+            //'slug' => 'required|string|max:255',
         ]);
 
         $menu = Menu::find($id);
@@ -200,7 +208,8 @@ class MenuController extends Controller
 
 
         $menu = Menu::find($id);
-        $menu->roles()->sync($request->role);
+        $role = Role::whereIn('id',$request->role)->get()->pluck('id')->toArray();
+        $menu->roles()->sync($role);
         event(new Registered($menu));
 
         return redirect()->intended('/menus');
@@ -215,6 +224,79 @@ class MenuController extends Controller
     public function destroy($id)
     {
         $menu = Menu::find($id)->delete();
+        return redirect()->intended('/menus');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function childMenuEdit($id)
+    {
+        if(Auth::user()->can('edit')){
+
+            $roles = Role::all()->map(function ($role) {
+                return [
+                    'value' => $role->id,
+                    'label' => $role->name
+                ];
+            });
+
+            $editmenu = ChildMenu::find($id);
+            
+            $menus = Menu::where('id',$editmenu->menu_id)->orderBy('order_by','ASC')->get();
+
+            $rolemenu = Menu::find($editmenu->menu_id);
+
+            return Inertia::render('Menus/ChildMenu/Edit', [
+                'roles' => $roles,
+                'editmenu' => $editmenu,
+                'role' => $rolemenu->roles->first() ? $rolemenu->roles->pluck('id')->toArray():0,
+                'menus' => $menus,
+                'status' => session('status'),
+            ]);
+
+        }else{
+
+            return redirect()->intended('/dashboard');
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateChildMenu(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            //'slug' => 'required|string|max:255',
+        ]);
+
+        $childmenu = ChildMenu::find($id);
+
+        //dd($request->parent_menu[0]);
+
+        $childmenu = $childmenu->update([
+            'name' => $request->name,
+            'slug' => $request->slug,
+            'order_by' => $request->order_by,
+            'menu_method' => $request->menu_method,
+            'menu_icon' => $request->menu_icon,
+            'menu_id' => $request->parent_menu[0]
+        ]);
+
+
+        $menu = Menu::find($request->parent_menu[0]);
+        $role = Role::whereIn('id',$request->role)->get()->pluck('id')->toArray();
+        $menu->roles()->sync($role);
+        event(new Registered($menu));
+
         return redirect()->intended('/menus');
     }
 }

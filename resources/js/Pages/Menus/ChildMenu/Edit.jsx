@@ -7,19 +7,22 @@ import InputError from '@/Components/InputError';
 import Label from '@/Components/Label';
 import { Head, Link, useForm } from '@inertiajs/react';
 import Select from '@/Components/Select';
+import SelectMenu from '@/Components/SelectMenu';
 
-export default function Create(props){
+export default function Edit(props){
+     console.log(props.role);
 	const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
-        role:''
+        name: props.editmenu.name,
+        slug: props.editmenu.slug,
+        order_by: props.editmenu.order_by,
+        menu_method: props.editmenu.menu_method,
+        menu_icon: props.editmenu.menu_icon,
+        role:props.role
     });
 
     useEffect(() => {
         return () => {
-            reset('password', 'password_confirmation');
+            reset('name', 'slug');
         };
     }, []);
 
@@ -30,13 +33,12 @@ export default function Create(props){
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('users.create'));
+        post(route('chidmenus.update',[props.editmenu.id]));
     };
 
-    let options = [{value:1,label:"Admin"},{value:2,label:'Subscriber'}];
-
     const onSelectHandleChange = (e) => {
-        setData({ ...data, [e.target.name]: e.target.value });
+        let value = Array.from(e.target.selectedOptions, option => option.value);
+        setData({ ...data, [e.target.name]: value });
     };
 
 	return (
@@ -46,10 +48,10 @@ export default function Create(props){
             menu={props.menu}
             logoUrl={props.logoUrl}
         >
-        	<div className="container mx-4 mt-12">
-                    <Head title="Create User" />
+        	<div className="container mx-4 my-12">
+                    <Head title="Create Menu" />
 
-            <form onSubmit={submit} enctype="multipart/form-data">
+            <form onSubmit={submit}>
                 <div>
                     <Label forInput="name" value="Name" />
 
@@ -68,50 +70,65 @@ export default function Create(props){
                 </div>
 
                 <div className="mt-4">
-                    <Label forInput="email" value="Email" />
+                    <Label forInput="slug" value="Slug" />
 
                     <Input
-                        type="email"
-                        name="email"
-                        value={data.email}
+                        type="text"
+                        name="slug"
+                        value={data.slug}
                         className="mt-1 block w-full"
-                        autoComplete="username"
+                        autoComplete="slug"
                         handleChange={onHandleChange}
-                        required
                     />
 
-                    <InputError message={errors.email} className="mt-2" />
+                    <InputError message={errors.slug} className="mt-2" />
+                </div>
+                <div className="mt-4">
+                    <Label forInput="menu_method" value="Menu Method" />
+
+                    <Input
+                        type="text"
+                        name="menu_method"
+                        value={data.menu_method}
+                        className="mt-1 block w-full"
+                        autoComplete="menu_method"
+                        handleChange={onHandleChange}
+                    />
+
+                    <InputError message={errors.menu_method} className="mt-2" />
+                </div>
+                <div className="mt-4">
+                    <Label forInput="menu_icon" value="Menu Icon" />
+
+                    <Input
+                        type="text"
+                        name="menu_icon"
+                        value={data.menu_icon}
+                        className="mt-1 block w-full"
+                        autoComplete="menu_icon"
+                        handleChange={onHandleChange}
+                    />
+
+                    <InputError message={errors.menu_method} className="mt-2" />
+                </div>
+                <div className="mt-4 w-1/4">
+                    <Label forInput="order_by" value="Order" />
+
+                    <Input
+                        type="text"
+                        name="order_by"
+                        value={data.order_by}
+                        className="mt-1 block w-full"
+                        autoComplete="order_by"
+                        handleChange={onHandleChange}
+                    />
+
+                    <InputError message={errors.order_by} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
-                    <Label forInput="password" value="Password" />
-
-                    <Input
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        handleChange={onHandleChange}
-                        required
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <Label forInput="password_confirmation" value="Confirm Password" />
-
-                    <Input
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        handleChange={onHandleChange}
-                        required
-                    />
-
-                    <InputError message={errors.password_confirmation} className="mt-2" />
+                    <Label forInput="menu_icon" value="Parent Menu" />
+                    <SelectMenu id="parent_menu" name="parent_menu" onChange={onSelectHandleChange} className="test" options={props.menus} placeholder="Select Menu" required="required" value={data.menu_id} />
                 </div>
 
                 <div className="mt-4">
@@ -119,7 +136,7 @@ export default function Create(props){
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
-                    <Button className="ml-4" processing={processing}>
+                    <Button className="ml-4 bg-red-700" processing={processing}>
                         Save
                     </Button>
                 </div>

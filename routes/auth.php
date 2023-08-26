@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Users\UserController;
 use App\Http\Controllers\Users\RoleController;
 use App\Http\Controllers\Menu\MenuController;
-use App\Http\Controllers\Contents\ContentController;
+use App\Http\Controllers\ProfileController;
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -57,6 +57,10 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
 });
 
@@ -81,4 +85,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/menus/{id}/edit',[MenuController::class,'edit'])->name('menus.edit');
     Route::post('/menus/{id}',[MenuController::class,'update'])->name('menus.update');
     Route::delete('/menus/{id}/delete',[MenuController::class,'destroy'])->name('menus.delete');
+    Route::get('/chidmenus/{id}/edit',[MenuController::class,'childMenuEdit'])->name('chidmenus.edit');
+    Route::post('/chidmenus/{id}',[MenuController::class,'updateChildMenu'])->name('chidmenus.update');
 });
