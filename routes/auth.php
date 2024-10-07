@@ -85,6 +85,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/menus/{id}/edit',[MenuController::class,'edit'])->name('menus.edit');
     Route::post('/menus/{id}',[MenuController::class,'update'])->name('menus.update');
     Route::delete('/menus/{id}/delete',[MenuController::class,'destroy'])->name('menus.delete');
-    Route::get('/chidmenus/{id}/edit',[MenuController::class,'childMenuEdit'])->name('chidmenus.edit');
-    Route::post('/chidmenus/{id}',[MenuController::class,'updateChildMenu'])->name('chidmenus.update');
+    Route::get('/childmenus/{id}/edit',[MenuController::class,'childMenuEdit'])->name('childmenus.edit');
+    Route::post('/childmenus/{id}',[MenuController::class,'updateChildMenu'])->name('childmenus.update');
 });

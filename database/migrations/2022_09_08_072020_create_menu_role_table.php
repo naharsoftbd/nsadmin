@@ -14,6 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('menu_role', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('menu_id')->nullable();
             $table->unsignedBigInteger('role_id')->nullable();
             $table->unsignedBigInteger('child_menu_id')->nullable();
@@ -24,7 +25,7 @@ return new class extends Migration
            $table->foreign('child_menu_id')->references('id')->on('child_menus')->onDelete('cascade');
 
            //SETTING THE PRIMARY KEYS
-           $table->primary(['menu_id','role_id']);
+           //$table->primary(['menu_id','role_id']);
         });
     }
 

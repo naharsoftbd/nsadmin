@@ -33,7 +33,7 @@ export default function Edit(props){
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('chidmenus.update',[props.editmenu.id]));
+        post(route('childmenus.update',[props.editmenu.id]));
     };
 
     const onSelectHandleChange = (e) => {
