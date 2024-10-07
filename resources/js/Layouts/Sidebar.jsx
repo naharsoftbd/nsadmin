@@ -27,7 +27,7 @@ export default function Sidebar({auth, menus}) {
             return ( (auth?.is_admin==true || menuRole[0]?.id == auth?.role?.id) ? <ListItem key={index} title={menu.name} parentslug={menu.slug} menu_method={menu.menu_method} childs={menu.childmenus} faicon={menu.menu_icon} menu_id={menu.id}/>:null);
     });      
     return (
-        <div className="hidden sm:flex bg-lime-700">
+        <div className="hidden sm:flex bg-cyan-600">
             <div className="flex flex-col p-4 w-60 h-screen">
                 <div className="space-y-3">
                     <div className="flex items-center">

@@ -20,7 +20,7 @@ export default function Authenticated({ auth, header, children, menu, dashboardl
 
     return (
         <div className="min-h-screen bg-gray-100">
-            <nav className="sticky top-0 z-10 bg-lime-700">
+            <nav className="sticky top-0 z-10 bg-cyan-600">
                 <div className="mx-auto px-4 sm:px-6 lg:px-4">
                     <div className="flex justify-between h-24">
                         <div className="flex">
