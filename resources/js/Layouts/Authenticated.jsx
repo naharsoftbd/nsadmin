@@ -6,19 +6,27 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 import { Head } from '@inertiajs/react';
 import Sidebar from '@/Layouts/Sidebar';
+import ListItem from './Menu/ListItem';
+import 'react-datetime-picker/dist/DateTimePicker.css';
+import 'react-calendar/dist/Calendar.css';
+import 'react-clock/dist/Clock.css';
 
-export default function Authenticated({ auth, header, children, menu, logoUrl }) {
+export default function Authenticated({ auth, header, children, menu, dashboardlogoUrl }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
-    console.log(logoUrl);
+    
+    const responsiveMenu = menu.map((menu,index) => {
+            return ( (menu?.roles?.find(({ slug }) => slug === auth?.role?.slug)?.id) ? <ListItem key={index} title={menu.name} parentslug={menu.slug} menu_method={menu.menu_method} childs={menu.childmenus} faicon={menu.menu_icon} menu_id={menu.id}/>:null);
+    }); 
+
     return (
         <div className="min-h-screen bg-gray-100">
-            <nav className="bg-red-700">
-                <div className="mx-auto px-4 sm:px-6 lg:px-8">
+            <nav className="sticky top-0 z-10 bg-lime-700">
+                <div className="mx-auto px-4 sm:px-6 lg:px-4">
                     <div className="flex justify-between h-24">
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
                                 <Link href={route('dashboard')}>
-                                    <ApplicationLogo logoUrl={logoUrl} className="block h-9 w-auto text-gray-500" />
+                                    <ApplicationLogo logoUrl={dashboardlogoUrl} className="block h-9 w-auto text-gray-500" />
                                 </Link>
                             </div>
 
@@ -57,7 +65,9 @@ export default function Authenticated({ auth, header, children, menu, logoUrl })
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
-                                        <Dropdown.Link href={route('profile.edit')} method="get">Profile</Dropdown.Link>
+                                        <Dropdown.Link href={route('profile.edit')} method="get" as="button">
+                                            Profile
+                                        </Dropdown.Link>
                                         <Dropdown.Link href={route('logout')} method="post" as="button">
                                             Log Out
                                         </Dropdown.Link>
@@ -93,29 +103,22 @@ export default function Authenticated({ auth, header, children, menu, logoUrl })
                 </div>
 
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
-                    <div className="pt-2 pb-3 space-y-1">
+                    {/*<div className="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
                             Dashboard
                         </ResponsiveNavLink>
-                    </div>
+                    </div>*/}
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
-                        <div className="px-4">
-                            <div className="font-medium text-base text-gray-800">{auth.user.name}</div>
-                            <div className="font-medium text-sm text-gray-500">{auth.user.email}</div>
-                        </div>
-
-                        <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink method="post" href={route('logout')} as="button">
-                                Log Out
-                            </ResponsiveNavLink>
+                        <div className="space-y-1">
+                            {responsiveMenu}
                         </div>
                     </div>
                 </div>
             </nav>
 
             {header && (
-                <header className="bg-red-700 shadow">
+                <header className="bg-lime-700 shadow">
                     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
                 </header>
             )}

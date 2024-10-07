@@ -36,7 +36,8 @@ export default function Create(props){
     let options = [{value:1,label:"Admin"},{value:2,label:'Subscriber'}];
 
     const onSelectHandleChange = (e) => {
-        setData({ ...data, [e.target.name]: e.target.value });
+        let value = Array.from(e.target.selectedOptions, option => option.value);
+        setData({ ...data, [e.target.name]: value });
     };
 
 	return (
@@ -44,9 +45,9 @@ export default function Create(props){
             auth={props.auth}
             errors={props.errors}
             menu={props.menu}
-            logoUrl={props.logoUrl}
+            dashboardlogoUrl={props.dashboardlogoUrl}
         >
-        	<div className="container mx-4 mt-12">
+        	<div className="container mx-4 my-12">
                     <Head title="Create Menu" />
 
             <form onSubmit={submit}>
@@ -77,7 +78,7 @@ export default function Create(props){
                         className="mt-1 block w-full"
                         autoComplete="slug"
                         handleChange={onHandleChange}
-                        required
+                        required={false}
                     />
 
                     <InputError message={errors.slug} className="mt-2" />
@@ -130,7 +131,7 @@ export default function Create(props){
 
                 <div className="mt-4">
                     <Label forInput="menu_icon" value="Parent Menu" />
-                    <SelectMenu id="parent_menu" name="parent_menu" onChange={onSelectHandleChange} className="test" options={props.menus} placeholder="Select Menu" required="required" value={data.parent_menu} />
+                    <SelectMenu id="parent_menu" name="parent_menu" onChange={onHandleChange} className="test" options={props.menus} placeholder="Select Menu" required="required" value={data.parent_menu} />
                 </div>
 
                 <div className="mt-4">
@@ -139,7 +140,7 @@ export default function Create(props){
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
-                    <Button className="ml-4" processing={processing}>
+                    <Button className="ml-4 bg-red-700" processing={processing}>
                         Save
                     </Button>
                 </div>

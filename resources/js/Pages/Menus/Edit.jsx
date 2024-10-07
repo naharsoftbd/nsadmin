@@ -10,7 +10,7 @@ import Select from '@/Components/Select';
 import SelectMenu from '@/Components/SelectMenu';
 
 export default function Edit(props){
-
+     console.log(props.role);
 	const { data, setData, post, processing, errors, reset } = useForm({
         name: props.editmenu.name,
         slug: props.editmenu.slug,
@@ -37,7 +37,8 @@ export default function Edit(props){
     };
 
     const onSelectHandleChange = (e) => {
-        setData({ ...data, [e.target.name]: e.target.value });
+        let value = Array.from(e.target.selectedOptions, option => option.value);
+        setData({ ...data, [e.target.name]: value });
     };
 
 	return (
@@ -45,9 +46,9 @@ export default function Edit(props){
             auth={props.auth}
             errors={props.errors}
             menu={props.menu}
-            logoUrl={props.logoUrl}
+            dashboardlogoUrl={props.dashboardlogoUrl}
         >
-        	<div className="container mx-4 mt-12">
+        	<div className="container mx-4 my-12">
                     <Head title="Create Menu" />
 
             <form onSubmit={submit}>

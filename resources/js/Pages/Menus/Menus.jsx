@@ -3,7 +3,7 @@ import Authenticated from '@/Layouts/Authenticated';
 import DataTable from 'react-data-table-component';
 import styled from 'styled-components';
 import differenceBy from 'lodash/differenceBy';
-import { router } from '@inertiajs/react'
+import { router } from '@inertiajs/react';
 import {TextField,ClearButton} from '@/Components/Style';
 import ExpandedComponent from '@/Components/ExpandedComponent';
 
@@ -129,7 +129,7 @@ export default function Menus(props){
             auth={props.auth}
             errors={props.errors}
             menu={props.menu}
-            logoUrl={props.logoUrl}
+            dashboardlogoUrl={props.dashboardlogoUrl}
         >
         	<div className="container mx-4 mt-12">
                     <DataTable
