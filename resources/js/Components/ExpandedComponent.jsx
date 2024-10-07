@@ -58,7 +58,7 @@ export default function ExpandedComponent({ type = 'submit', className = '', chi
     ]);
 
     const handleEditButtonClick = (id) => {
-        id ? router.visit(`/chidmenus/${id}/edit/`, { method: 'get' }):null;
+        id ? router.visit(`/childmenus/${id}/edit/`, { method: 'get' }):null;
     };
 
     let filteredItems = childData?.childmenus.filter(

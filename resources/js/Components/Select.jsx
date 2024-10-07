@@ -4,6 +4,7 @@ export default function Select({id, name, onChange, className, options, placehol
     return (
         <>
             <select
+                multiple={id=='user_role' ? true:false}
                 value={value} //added
                 className={
                     `border-gray-300 focus:border-indigo-200 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-xl shadow-sm sm:text-sm` +
